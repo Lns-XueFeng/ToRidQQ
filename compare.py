@@ -34,9 +34,7 @@ class CompareImage:
     def compare_image(self):
         """
         进行比较
-        :param image1:图片1
-        :param image2: 图片2
-        :return:
+        :return: same_rate 图片相似度
         """
         left = 80   # 坐标起始位置
         right_num = 0   # 记录相同像素点个数

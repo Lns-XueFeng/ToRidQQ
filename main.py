@@ -122,4 +122,3 @@ if __name__ == '__main__':
     while True:
         main(name='弹药20级6班')
         sleep(60)   # 1分钟查看一次
-
