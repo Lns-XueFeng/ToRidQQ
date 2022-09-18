@@ -1,3 +1,7 @@
+import datetime
+import logging
+import time
+
 from PIL import Image
 
 
@@ -16,6 +20,7 @@ class CompareImage:
         # 取两个图片像素点
         piex1 = self.image_one.load()[x, y]
         piex2 = self.image_two.load()[x, y]
+
         threshold = 10
         # 比较每个像素点的RGB值是否在阈值范围内，若两张图片的RGB值都在某一阈值内，则我们认为它的像素点是一样的
         if abs(piex1[0] - piex2[0]) < threshold and \
@@ -49,8 +54,8 @@ class CompareImage:
                 all_num += 1
         same_rate = round(right_num / all_num, 3)		# 相同像素点比例
         nosame_rate = round(false_num / all_num, 3)	 # 不同像素点比例
-        print("图片相似度: ", str(round(same_rate * 100, 1)) + "%")
-        print("图片不相似度: ", str(round(nosame_rate * 100, 1)) + "%")
+        logging.info("图片相似度: " + str(round(same_rate * 100, 1)) + "%")
+        logging.info("图片不相似度: " + str(round(nosame_rate * 100, 1)) + "%")
 
         return same_rate
 
@@ -60,3 +65,4 @@ if __name__ == "__main__":
     if compare.compare_size():
         same_rate = compare.compare_image()
         print(same_rate)
+    print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))

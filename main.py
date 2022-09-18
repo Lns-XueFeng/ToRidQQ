@@ -1,3 +1,5 @@
+import logging
+from datetime import datetime
 from time import sleep
 from email import encoders, utils
 from email.mime.base import MIMEBase
@@ -11,8 +13,9 @@ from compare import CompareImage
 
 """
 原因：
-    此脚本是为了满足我不想在手机上下载qq所写一直以来我都觉得QQ的界面越来越臃肿, 且随着QQ使用时间的增加各种群各种联系人越来越多, 
-    可是我需要查看的群只有那么一个两个, 因此我便萌生了做一个程序帮助我自动检测QQ对应的群是否有新消息了, 
+    此脚本是为了满足我不想在手机上下载qq所写一直以来我都觉得QQ的界面越来越臃肿, 
+    且随着QQ使用时间的增加各种群各种联系人越来越多, 可是我需要查看的群只有那么一个两个, 
+    因此我便萌生了做一个程序帮助我自动检测QQ对应的群是否有新消息了, 
     如果有, 通过QQ邮箱发送给我(我比较喜欢用邮箱), 这样我便不用每天不知不觉的耗费大量时间与精力在QQ上, 
     事实证明我是对的, 在卸载了QQ之后我的手机无比安静, 使得我每天多出非常多的精力与时间来做别的事情
     (注：我手机本身的APP就非常少)
@@ -27,6 +30,7 @@ from compare import CompareImage
     如果不相似则说明是新消息
     发送邮件到我手机
 
+注意：不可打开多个聊天窗口, 目前一次仅支持一个
 可能还需要一个是否链接上校园网的判断, 没有的话就用协议自动链接校园网
 """
 
@@ -75,7 +79,7 @@ def send_qq(name):
     return ret
 
 
-def compare_images(path_one, path_two):
+def compare_images():
     """
     比较图片是否相同：
     :return True -> 图片相同   False -> 图片不同
@@ -87,7 +91,7 @@ def compare_images(path_one, path_two):
 
     if not compare.compare_size():   # 如果两张图片大小就不一样可认定图片不同
         # 造成大小不一样可能原因之一：换了获取信息的窗口, 所以需要覆盖一次图片
-        print("可能切换了QQ窗口, 进行一次覆盖")
+        logging.warning("可能切换了QQ窗口, 进行一次覆盖")
         with open("old_pic.png", 'wb') as fp1:
             with open("new_pic.png", 'rb') as fp2:
                 b_data = fp2.read()
@@ -107,24 +111,30 @@ def main(name):
     if qq_box_win.Exists(5):
         qq_box_mess.CaptureToImage("new_pic.png")
 
-    match_result = compare_images("new_pic.png", "old_pic.png")
+    match_result = compare_images()
     if not match_result:
-        print("发现新消息：发送邮件")
+        logging.info("发现新消息：发送邮件")
         ret = send_qq(name)
         if ret:
-            print("邮件发送成功")
+            logging.info("邮件发送成功")
+            logging.info("\n")
         else:
-            print("邮件发送失败")
+            logging.warning("邮件发送失败")
+            logging.info("\n")
         # 将新图片替换老图片, 以便于下次的比较
         with open("old_pic.png", 'wb') as fp1:
-            with open("old_pic.png", 'rb') as fp2:
+            with open("new_pic.png", 'rb') as fp2:
                 b_data = fp2.read()
                 fp1.write(b_data)
     else:
-        print("图片相同 ->判断为信息重复：本次不发送邮件提醒")
+        logging.info("图片相同 ->判断为信息重复：本次不发送邮件提醒")
+        logging.info("\n")
 
 
 if __name__ == '__main__':
+    logging.basicConfig(filename="results.log", filemode="a", encoding="utf-8", level="INFO")
+    print("程序开始监控QQ聊天窗口")
     while True:
-        main(name='弹药20级6班')
-        sleep(60)   # 1分钟查看一次
+        logging.info(datetime.now().strftime("%Y-%m-%d %H:%M"))
+        main(name='团结的火药桶')
+        sleep(600)   # 1分钟查看一次
