@@ -6,7 +6,6 @@ from smtplib import SMTP_SSL
 from email.mime.text import MIMEText
 
 import uiautomation as auto
-
 from compare import CompareImage
 
 
