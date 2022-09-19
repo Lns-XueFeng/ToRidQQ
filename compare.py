@@ -1,14 +1,12 @@
-import datetime
 import logging
-import time
 
 from PIL import Image
 
 
 class CompareImage:
     def __init__(self):
-        self.image_one = Image.open("new_pic.png")
-        self.image_two = Image.open("old_pic.png")
+        self.image_one = Image.open("images/new_pic.png")
+        self.image_two = Image.open("images/old_pic.png")
 
     def pixel_equal(self, x, y):
         """
@@ -65,4 +63,3 @@ if __name__ == "__main__":
     if compare.compare_size():
         same_rate = compare.compare_image()
         print(same_rate)
-    print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
