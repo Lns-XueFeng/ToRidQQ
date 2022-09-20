@@ -1,58 +1,58 @@
 import logging
-from time import sleep
+from smtplib import SMTP_SSL
 from email import encoders, utils
+from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
-from smtplib import SMTP_SSL
-from email.mime.text import MIMEText
 
-import uiautomation as auto
+import uiautomation
 
 from compare import CompareImage
+from config import MY_USER, MY_SENDER, MY_PASSWORD
 
 
 def send_qq(name):
-    my_sender = '1477792904@qq.com'
-    my_pass = 'ctohgjxfvcrufjef'
-    my_user = '1477792904@qq.com'
-    ret = True
+    main_msg = make_email(name)
+    try:
+        server = SMTP_SSL("smtp.qq.com", 465)
+        server.login(MY_SENDER, MY_PASSWORD)
+        server.sendmail(MY_SENDER, [MY_USER, ], main_msg.as_string())
+        server.quit()
 
+    except Exception:
+        return False
+
+    return True
+
+
+def make_email(name):
     # 构造MIMEMultipart对象做为根容器
     main_msg = MIMEMultipart()
 
     html_msg = MIMEText(
         '<p style="font-size:20px; color:pink;"> 新消息的截图 </p>\
-        <p><img src="cid:0" /></p>', 'html', 'utf-8'
+        <p><img src="cid:new_pic.png" /></p>', 'html', 'utf-8'
     )
     main_msg.attach(html_msg)
 
     main_msg['From'] = 'Lns-XueFeng'
-    main_msg['To'] = my_user
+    main_msg['To'] = MY_USER
     main_msg['Subject'] = str(name) + "来消息啦"
     main_msg['Date'] = utils.formatdate()
 
     # 添加附件就是加上一个MIMEBase，从本地读取一个图片:
     with open('images/new_pic.png', 'rb') as f:
         # 设置附件的MIME和文件名，这里是png类型:
-        mime = MIMEBase('image', 'png', filename='images/old_pic.png')
+        mime = MIMEBase('image', 'png', filename='images/new_pic.png')
         # 加上必要的头信息:
-        mime.add_header('Content-Disposition', 'attachment', filename='images/old_pic.png')
-        mime.add_header('Content-ID', '<0>')
-        mime.add_header('X-Attachment-Id', '0')
+        mime.add_header('Content-Disposition', 'attachment', filename='images/new_pic.png')
+        mime.add_header('Content-ID', '<new_pic.png>')
+        mime.add_header('X-Attachment-Id', 'new_pic.png')
         mime.set_payload(f.read())
         encoders.encode_base64(mime)
         main_msg.attach(mime)
 
-    try:
-        server = SMTP_SSL("smtp.qq.com", 465)
-        server.login(my_sender, my_pass)
-        server.sendmail(my_sender, [my_user, ], main_msg.as_string())
-        server.quit()
-
-    except Exception:
-        ret = False
-
-    return ret
+    return main_msg
 
 
 def compare_images():
@@ -81,13 +81,15 @@ def compare_images():
 
 
 def main(name):
-    qq_box_win = auto.WindowControl(searchDepth=1, ClassName='TXGuiFoundation',
-                                    Name=name)
-    qq_box_mess = qq_box_win.ListControl(Name="消息")
+    qq_box_win = uiautomation.WindowControl(
+        searchDepth=1,
+        ClassName='TXGuiFoundation',
+        Name=name,
+    )
+    qq_box_sms = qq_box_win.ListControl(Name="消息")
     if qq_box_win.Exists(5):
-        qq_box_mess.CaptureToImage("images/new_pic.png")
+        qq_box_sms.CaptureToImage("images/new_pic.png")
 
-    sleep(0.5)
     match_result = compare_images()
     if not match_result:
         logging.info("发现新消息：发送邮件")
