@@ -18,8 +18,8 @@ def send_qq(name):
         server.login(MY_SENDER, MY_PASSWORD)
         server.sendmail(MY_SENDER, [MY_USER, ], main_msg.as_string())
         server.quit()
-
-    except Exception:
+    except Exception as result:
+        logging.error(f"发送QQ邮件Error：{result}")
         return False
 
     return True
@@ -67,7 +67,7 @@ def compare_images():
 
     if not compare.compare_size():  # 如果两张图片大小就不一样可认定图片不同
         # 造成大小不一样可能原因之一：换了获取信息的窗口, 所以需要覆盖一次图片
-        logging.warning("可能切换了QQ窗口, 进行一次覆盖")
+        logging.warning("可能切换了QQ窗口：进行一次覆盖")
         with open("images/old_pic.png", 'wb') as fp1:
             with open("images/new_pic.png", 'rb') as fp2:
                 b_data = fp2.read()
@@ -80,7 +80,7 @@ def compare_images():
         return False
 
 
-def main(name):
+def run(name):
     qq_box_win = uiautomation.WindowControl(
         searchDepth=1,
         ClassName='TXGuiFoundation',
@@ -92,13 +92,13 @@ def main(name):
 
     match_result = compare_images()
     if not match_result:
-        logging.info("发现新消息：发送邮件")
+        logging.info("发现新消息：Send")
         ret = send_qq(name)
         if ret:
-            logging.info("邮件发送成功")
+            logging.info("邮件发送：Success")
             logging.info("\n")
         else:
-            logging.warning("邮件发送失败")
+            logging.warning("邮件发送：Fail")
             logging.info("\n")
         # 将新图片替换老图片, 以便于下次的比较
         with open("images/old_pic.png", 'wb') as fp1:
@@ -106,5 +106,5 @@ def main(name):
                 b_data = fp2.read()
                 fp1.write(b_data)
     else:
-        logging.info("图片相同 ->判断为信息重复：本次不发送邮件提醒")
+        logging.info("图片相似度大于99%->判定为信息重复：本次不发送邮件提醒")
         logging.info("\n")

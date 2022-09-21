@@ -19,7 +19,8 @@ class CompareImage:
         piex2 = self.image_two.load()[x, y]
 
         threshold = 10
-        # 比较每个像素点的RGB值是否在阈值范围内，若两张图片的RGB值都在某一阈值内，则我们认为它的像素点是一样的
+        # 比较每个像素点的RGB值是否在阈值范围内，
+        # 若两张图片的RGB值都在某一阈值内，则我们认为它的像素点是一样的
         if abs(piex1[0] - piex2[0]) < threshold and \
                 abs(piex1[1] - piex2[1]) < threshold and \
                 abs(piex1[2] - piex2[2]) < threshold:
@@ -32,6 +33,7 @@ class CompareImage:
         size_two = self.image_two.size
         if size_one == size_two:
             return True
+        return False
 
     def compare_image(self):
         """
@@ -51,8 +53,8 @@ class CompareImage:
                 all_num += 1
         same_rate = round(right_num / all_num, 3)		# 相同像素点比例
         nosame_rate = round(false_num / all_num, 3)	 # 不同像素点比例
-        logging.info("图片相似度: " + str(round(same_rate * 100, 1)) + "%")
-        logging.info("图片不相似度: " + str(round(nosame_rate * 100, 1)) + "%")
+        logging.info(f"图片相似度：{str(round(same_rate * 100, 1))}%")
+        logging.info(f"图片不相似度：{str(round(nosame_rate * 100, 1))}%")
 
         return same_rate
 

@@ -1,8 +1,9 @@
+import os
 import sys
 import logging
+from time import sleep
 
 import requests
-from requests import HTTPError
 
 from config import SCHOOL_ACCOUNT, SCHOOL_PASSWORD
 
@@ -16,14 +17,14 @@ class Internet:
     因，校园网在一定时间后会失效，需重新连接
     故，需要另外加一个功能判断是否有网，如果无，则自动连接
     """
-    url = "http://10.255.0.19/drcom/login?"
+    _url = "http://10.255.0.19/drcom/login?"
 
-    header = {
+    _header = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.42",
     }
-    params = {
+    _params = {
         "callback": "dr1003",
         "DDDDD": SCHOOL_ACCOUNT,
         "upass": SCHOOL_PASSWORD,
@@ -36,39 +37,32 @@ class Internet:
         "v": "581",
     }
 
-    def __init__(self):
-        pass
-
     @classmethod
     def try_link(cls):
         res = None
         try:
             res = requests.get(
-                url=Internet.url,
-                headers=Internet.header,
-                params=Internet.params,
+                url=Internet._url,
+                headers=Internet._header,
+                params=Internet._params,
             ).status_code
-        except HTTPError:
-            logging.warning("连接校园网Error：" + str(HTTPError))
+        except Exception as result:
+            logging.error(f"连接校园网Error：{result}")
 
         if res != 200:
+            sleep(1)
             cls.try_link()
-            logging.info("Try again")
+            logging.warning("Try again")
 
         logging.info("成功连接校园网")
         return res
 
     @classmethod
     def check_internet(cls):
-        res = None
-        try:
-            res = requests.get(
-                url="https://www.baidu.com",
-                headers=Internet.header,
-            ).status_code
-        except HTTPError:
-            logging.warning("检测是否有网络Error：" + str(HTTPError))
-        return res
+        res = os.system("ping baidu.com -n 1")
+        if res == 0:
+            return True
+        return False
 
 
 if __name__ == "__main__":
