@@ -1,11 +1,15 @@
 import logging
+
 from PIL import Image
+
+from config import NEW_IMAGE_PATH, OLD_IMAGE_PATH
+from config import SAME_RATE, NO_SAME_RATE, PERCENT_SIGN
 
 
 class CompareImage:
     def __init__(self):
-        self.image_one = Image.open("images/new_pic.png")
-        self.image_two = Image.open("images/old_pic.png")
+        self.image_one = Image.open(NEW_IMAGE_PATH)
+        self.image_two = Image.open(OLD_IMAGE_PATH)
 
     def pixel_equal(self, x, y):
         """
@@ -25,8 +29,7 @@ class CompareImage:
                 abs(piex1[1] - piex2[1]) < threshold and \
                 abs(piex1[2] - piex2[2]) < threshold:
             return True
-        else:
-            return False
+        return False
 
     def compare_size(self):
         size_one = self.image_one.size
@@ -37,7 +40,7 @@ class CompareImage:
 
     def compare_image(self):
         """
-        进行比较
+        将俩图片进行比较
         :return: same_rate 图片相似度
         """
         left = 80   # 坐标起始位置
@@ -51,10 +54,10 @@ class CompareImage:
                 else:
                     false_num += 1
                 all_num += 1
-        same_rate = round(right_num / all_num, 3)		# 相同像素点比例
-        nosame_rate = round(false_num / all_num, 3)	 # 不同像素点比例
-        logging.info(f"图片相似度：{str(round(same_rate * 100, 1))}%")
-        logging.info(f"图片不相似度：{str(round(nosame_rate * 100, 1))}%")
+        same_rate = round(right_num / all_num, 3)
+        no_same_rate = round(false_num / all_num, 3)
+        logging.info(f"{SAME_RATE}{str(round(same_rate * 100, 1))}{PERCENT_SIGN}")
+        logging.info(f"{NO_SAME_RATE}{str(round(no_same_rate * 100, 1))}{PERCENT_SIGN}")
 
         return same_rate
 
@@ -62,5 +65,5 @@ class CompareImage:
 if __name__ == "__main__":
     compare = CompareImage()
     if compare.compare_size():
-        same_rate = compare.compare_image()
-        print(same_rate)
+        rate = compare.compare_image()
+        print(rate)

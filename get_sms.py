@@ -5,6 +5,7 @@ from datetime import datetime
 from engine import run
 from internet import Internet
 
+from config import *
 
 """
 1.打开QQ -> 2.打开群聊 -> 3.运行脚本 -> 4.确保窗口无遮挡
@@ -26,20 +27,19 @@ from internet import Internet
 
 if __name__ == '__main__':
     logging.basicConfig(
-        level="INFO",
-        filemode="a",
-        encoding="utf-8",
-        filename="result/results.log",
+        level=LOG_LEVEL,
+        filemode=A_MODE,
+        encoding=UTF_8,
+        filename=LOG_RESULT_PATH,
     )
-    print("程序开始监控QQ聊天窗口")
+    print(PRINT_START)
     while True:
-        logging.info(datetime.now().strftime("%Y-%m-%d %H:%M"))
+        logging.info(datetime.now().strftime(TIME_FORMAT))
         res = Internet.check_internet()
         if not res:
             if Internet.try_link() != 200:
-                logging.warning("尝试连接校园网失败...")
+                logging.warning(LOG_WARN_TREE)
                 break
-            logging.info("计算机网络连接：{}".format(res))
-        run(name='团结的火药桶')
+        run(name=QQ_WINDOW_NAME)
         sleep(60)   # 一分钟查看一次
-    print("程序结束监控QQ意外退出")
+    print(PRINT_END)

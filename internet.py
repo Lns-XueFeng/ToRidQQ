@@ -5,7 +5,8 @@ from time import sleep
 
 import requests
 
-from config import SCHOOL_ACCOUNT, SCHOOL_PASSWORD
+from key import SCHOOL_ACCOUNT, SCHOOL_PASSWORD
+from config import *
 
 
 sys.setrecursionlimit(100)   # 设置最大递归层数为100
@@ -47,19 +48,19 @@ class Internet:
                 params=Internet._params,
             ).status_code
         except Exception as result:
-            logging.error(f"连接校园网Error：{result}")
+            logging.error(f"{LOG_ERROR_ONE}{result}")
 
         if res != 200:
             sleep(1)
             cls.try_link()
-            logging.warning("Try again")
+            logging.warning(LOG_WARN_FOUR)
 
-        logging.info("成功连接校园网")
+        logging.info(LOG_INGO_FIVE)
         return res
 
     @classmethod
     def check_internet(cls):
-        res = os.system("ping baidu.com -n 1")
+        res = os.system(PING_BAIDU)
         if res == 0:
             return True
         return False
