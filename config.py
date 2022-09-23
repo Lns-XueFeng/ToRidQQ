@@ -54,6 +54,4 @@ PERCENT_SIGN = "%"
 
 
 # -----------------------------internet.py-----------------------------
-DDDDD = "DDDDD"
-UPASS = "upass"
 PING_BAIDU = "ping baidu.com -n 1"

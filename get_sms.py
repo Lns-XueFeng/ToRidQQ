@@ -35,9 +35,8 @@ if __name__ == '__main__':
     print(PRINT_START)
     while True:
         logging.info(datetime.now().strftime(TIME_FORMAT))
-        res = Internet.check_internet()
-        if not res:
-            if Internet.try_link() != 200:
+        if not Internet.check_computer_internet():
+            if Internet.link_school_internet() != 200:
                 logging.warning(LOG_WARN_TREE)
                 break
         run(name=QQ_WINDOW_NAME)

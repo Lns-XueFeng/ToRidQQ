@@ -7,11 +7,11 @@ from config import SAME_RATE, NO_SAME_RATE, PERCENT_SIGN
 
 
 class CompareImage:
-    def __init__(self):
-        self.image_one = Image.open(NEW_IMAGE_PATH)
-        self.image_two = Image.open(OLD_IMAGE_PATH)
+    def __init__(self, new_image_path, old_image_path):
+        self._image_one = Image.open(new_image_path)
+        self._image_two = Image.open(old_image_path)
 
-    def pixel_equal(self, x, y):
+    def _compare_two_pixel(self, x, y):
         """
         判断两个像素是否相同
         :param x: 位置x
@@ -19,26 +19,32 @@ class CompareImage:
         :return: 像素是否相同
         """
         # 取两个图片像素点
-        piex1 = self.image_one.load()[x, y]
-        piex2 = self.image_two.load()[x, y]
+        piex1 = self._image_one.load()[x, y]
+        piex2 = self._image_two.load()[x, y]
 
-        threshold = 10
         # 比较每个像素点的RGB值是否在阈值范围内，
-        # 若两张图片的RGB值都在某一阈值内，则我们认为它的像素点是一样的
-        if abs(piex1[0] - piex2[0]) < threshold and \
-                abs(piex1[1] - piex2[1]) < threshold and \
-                abs(piex1[2] - piex2[2]) < threshold:
+        # 若两张图片的RGB值都在规定范围内，则我们认为它的像素点是一样的
+        threshold = 10
+        compare1 = abs(piex1[0] - piex2[0]) < threshold
+        compare2 = abs(piex1[1] - piex2[1]) < threshold
+        compare3 = abs(piex1[2] - piex2[2]) < threshold
+        if compare1 and compare2 and compare3:
             return True
         return False
 
-    def compare_size(self):
-        size_one = self.image_one.size
-        size_two = self.image_two.size
+    def compare_images_size(self):
+        """
+        比较两个图片的尺寸是否相等
+        :if 相等 return True
+        :else return False
+        """
+        size_one = self._image_one.size
+        size_two = self._image_two.size
         if size_one == size_two:
             return True
         return False
 
-    def compare_image(self):
+    def compare_two_images(self):
         """
         将俩图片进行比较
         :return: same_rate 图片相似度
@@ -47,9 +53,9 @@ class CompareImage:
         right_num = 0   # 记录相同像素点个数
         false_num = 0   # 记录不同像素点个数
         all_num = 0   # 记录所有像素点个数
-        for i in range(left, self.image_one.size[0]):
-            for j in range(self.image_one.size[1]):
-                if self.pixel_equal(i, j):
+        for i in range(left, self._image_one.size[0]):
+            for j in range(self._image_one.size[1]):
+                if self._compare_two_pixel(i, j):
                     right_num += 1
                 else:
                     false_num += 1
@@ -63,7 +69,7 @@ class CompareImage:
 
 
 if __name__ == "__main__":
-    compare = CompareImage()
-    if compare.compare_size():
-        rate = compare.compare_image()
+    compare = CompareImage(NEW_IMAGE_PATH, OLD_IMAGE_PATH)
+    if compare.compare_images_size():
+        rate = compare.compare_two_images()
         print(rate)
