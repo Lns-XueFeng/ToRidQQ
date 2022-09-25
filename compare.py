@@ -7,11 +7,11 @@ from config import SAME_RATE, NO_SAME_RATE, PERCENT_SIGN
 
 
 class CompareImage:
-    def __init__(self, new_image_path, old_image_path):
+    def __init__(self, new_image_path: str, old_image_path: str):
         self._image_one = Image.open(new_image_path)
         self._image_two = Image.open(old_image_path)
 
-    def _compare_two_pixel(self, x, y):
+    def _compare_two_pixel(self, x: int, y: int) -> bool:
         """
         判断两个像素是否相同
         :param x: 位置x
@@ -32,7 +32,7 @@ class CompareImage:
             return True
         return False
 
-    def compare_images_size(self):
+    def compare_images_size(self) -> bool:
         """
         比较两个图片的尺寸是否相等
         :if 相等 return True
@@ -44,7 +44,7 @@ class CompareImage:
             return True
         return False
 
-    def compare_two_images(self):
+    def compare_two_images(self) -> float:
         """
         将俩图片进行比较
         :return: same_rate 图片相似度

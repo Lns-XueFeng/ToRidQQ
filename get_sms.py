@@ -35,10 +35,13 @@ if __name__ == '__main__':
     print(PRINT_START)
     while True:
         logging.info(datetime.now().strftime(TIME_FORMAT))
-        if not Internet.check_computer_internet():
-            if Internet.link_school_internet() != 200:
+        computer_internet = Internet.check_computer_internet()
+        if not computer_internet:
+            school_link_status = Internet.link_school_internet()
+            if school_link_status != 200:
                 logging.warning(LOG_WARN_TREE)
-                break
+                sleep(300)   # 五分钟后重试
+                continue
         run(name=QQ_WINDOW_NAME)
         sleep(60)   # 一分钟查看一次
     print(PRINT_END)

@@ -1,7 +1,6 @@
 import os
 import sys
 import logging
-from time import sleep
 
 import requests
 from requests import HTTPError
@@ -40,7 +39,7 @@ class Internet:
     }
 
     @classmethod
-    def link_school_internet(cls):
+    def link_school_internet(cls) -> int or None:
         res = None
         try:
             res = requests.get(
@@ -51,16 +50,16 @@ class Internet:
         except HTTPError as error:
             logging.error(f"{LOG_ERROR_ONE}{error}")
 
-        if res != 200:
-            sleep(1)
-            cls.link_school_internet()
-            logging.warning(LOG_WARN_FOUR)
+        # if res != 200:
+        #     sleep(1)
+        #     cls.link_school_internet()
+        #     logging.warning(LOG_WARN_FOUR)
 
         logging.info(LOG_INGO_FIVE)
         return res
 
     @classmethod
-    def check_computer_internet(cls):
+    def check_computer_internet(cls) -> bool:
         res = os.system(PING_BAIDU)
         if res == 0:
             return True
