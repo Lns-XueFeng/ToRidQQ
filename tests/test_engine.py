@@ -11,7 +11,7 @@ import engine
 class TestEngine(unittest.TestCase):
 
     def test_compare_two_same_images(self):
-        """测试验证两张相同的图片相似"""
+        """测试验证两张图片相似"""
         result = engine._compare_two_images(
             "test_same_images/test_new_pic.png",
             "test_same_images/test_old_pic.png",
@@ -19,7 +19,7 @@ class TestEngine(unittest.TestCase):
         self.assertTrue(result, True)
 
     def test_compare_two_no_same_images(self):
-        """测试验证两张不同的图片不相似"""
+        """测试验证两张图片不相似"""
         result = engine._compare_two_images(
             "test_nosame_images/test_new_pic.png",
             "test_nosame_images/test_old_pic.png",
@@ -27,12 +27,22 @@ class TestEngine(unittest.TestCase):
         self.assertFalse(result, False)
 
     def test_compare_two_nosame_size_images(self):
-        """测试验证两张不同尺寸的图片尺寸不相等"""
+        """测试验证两张图片尺寸不相等"""
+        engine._new_to_old = MagicMock(return_value=None)
         result = engine._compare_two_images(
             "test_size_images/test_new_pic.png",
             "test_size_images/test_old_pic.png",
         )
         self.assertFalse(result, False)
+
+    def test_compare_two_same_size_images(self):
+        """测试验证两张图片尺寸相等"""
+        engine._new_to_old = MagicMock(return_value=None)
+        result = engine._compare_two_images(
+            "test_same_images/test_new_pic.png",
+            "test_same_images/test_old_pic.png",
+        )
+        self.assertTrue(result, True)
 
     def test_generate_email(self):
         """测试生成了MIMEMultipart邮件"""

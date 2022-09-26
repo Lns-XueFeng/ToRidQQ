@@ -68,7 +68,6 @@ def _compare_two_images(new_image_path: str, old_image_path: str) -> bool:
     可能还缺判断图片相似度极低的情况下判断是不是捕获到的不是聊天窗口
     """
     compare = CompareImage(new_image_path, old_image_path)
-    same_rate = compare.compare_two_images()
 
     if not compare.compare_images_size():   # 如果两张图片大小就不一样可认定图片不同
         # 造成大小不一样可能原因之一：换了获取信息的窗口, 所以需要覆盖一次图片
@@ -76,6 +75,7 @@ def _compare_two_images(new_image_path: str, old_image_path: str) -> bool:
         _new_to_old()   # 将新图片替换老图片
         return False
 
+    same_rate = compare.compare_two_images()
     if same_rate > 0.99:   # 相似度大于99%认为图片相似
         return True
     else:
