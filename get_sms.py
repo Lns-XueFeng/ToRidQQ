@@ -42,6 +42,15 @@ if __name__ == '__main__':
                 logging.warning(LOG_WARN_TREE)
                 sleep(300)   # 五分钟后重试
                 continue
-        run(name=QQ_WINDOW_NAME)
+        result = run(name=QQ_WINDOW_NAME)
+        if result == 'send success':
+            logging.info(LOG_INFO_TWO)
+            logging.info(LOG_INFO_TREE)
+        if result == 'send failed':
+            logging.warning(LOG_WARN_TWO)
+            logging.info(LOG_INFO_TREE)
+        if result == 'image not equal':
+            logging.info(LOG_INFO_FOUR)
+            logging.info(LOG_INFO_TREE)
         sleep(60)   # 一分钟查看一次
     print(PRINT_END)

@@ -33,7 +33,7 @@ def _send_qq_email(name: str) -> bool:
     return True
 
 
-def _generate_email(name: str, new_image_path: str) -> MIMEMultipart or bool:
+def _generate_email(name: str, new_image_path: str) -> MIMEMultipart:
     # 构造MIMEMultipart对象做为根容器
     main_msg = MIMEMultipart()
     html_msg = MIMEText('<p style="font-size:20px; color:pink;"> 新消息的截图 </p>'
@@ -56,9 +56,6 @@ def _generate_email(name: str, new_image_path: str) -> MIMEMultipart or bool:
         mime.set_payload(f.read())
         encoders.encode_base64(mime)
         main_msg.attach(mime)
-
-    if name == "test":
-        return True
 
     return main_msg
 
@@ -85,7 +82,7 @@ def _compare_two_images(new_image_path: str, old_image_path: str) -> bool:
         return False
 
 
-def run(name: str):
+def _capture_qq_window(name: str, new_image_path: str):
     qq_box_win = uiautomation.WindowControl(
         searchDepth=1,
         ClassName=WINDOW_CLASS_NAME,
@@ -93,20 +90,17 @@ def run(name: str):
     )
     qq_box_sms = qq_box_win.ListControl(Name=WINDOW_NAME)
     if qq_box_win.Exists(5):
-        qq_box_sms.CaptureToImage(NEW_IMAGE_PATH)
+        qq_box_sms.CaptureToImage(new_image_path)
 
+
+def run(name: str):
+    _capture_qq_window(name, NEW_IMAGE_PATH)
     match_result = _compare_two_images(NEW_IMAGE_PATH, OLD_IMAGE_PATH)
     if not match_result:
         logging.info(LOG_INFO_ONE)
         ret = _send_qq_email(name)
+        _new_to_old()   # new_image -> old_image
         if ret:
-            logging.info(LOG_INFO_TWO)
-            logging.info(LOG_INFO_TREE)
-        else:
-            logging.warning(LOG_WARN_TWO)
-            logging.info(LOG_INFO_TREE)
-        # 将新图片替换老图片, 以便于下次的比较
-        _new_to_old()
-    else:
-        logging.info(LOG_INFO_FOUR)
-        logging.info(LOG_INFO_TREE)
+            return 'send success'
+        return 'send failed'
+    return 'image not equal'

@@ -18,7 +18,7 @@ LOG_INGO_FIVE = "成功连接校园网"
 
 
 # -----------------------------get_sms.py-----------------------------
-LOG_LEVEL = "DEBUG"
+LOG_LEVEL = "INFO"
 A_MODE = "a"
 UTF_8 = "utf-8"
 LOG_RESULT_PATH = "result/results.log"
