@@ -98,9 +98,9 @@ def _capture_qq_window(name: str, new_image_path: str):
 
 
 def run(name: str):
-    if not os.path.exists("./images"):
+    if not os.path.exists("./images") and name == QQ_WINDOW_NAME:
         os.mkdir("./images")
-    if not os.path.exists("./result"):
+    if not os.path.exists("./result") and name == QQ_WINDOW_NAME:
         os.mkdir("./result")
     _capture_qq_window(name, NEW_IMAGE_PATH)
     match_result = _compare_two_images(NEW_IMAGE_PATH, OLD_IMAGE_PATH)
