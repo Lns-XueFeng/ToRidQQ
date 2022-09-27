@@ -2,8 +2,8 @@ import logging
 
 from PIL import Image
 
-from config import NEW_IMAGE_PATH, OLD_IMAGE_PATH
-from config import SAME_RATE, NO_SAME_RATE, PERCENT_SIGN
+from .config import NEW_IMAGE_PATH, OLD_IMAGE_PATH
+from .config import SAME_RATE, NO_SAME_RATE, PERCENT_SIGN
 
 
 class CompareImage:

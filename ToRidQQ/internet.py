@@ -5,8 +5,8 @@ import logging
 import requests
 from requests import HTTPError
 
-from key import SCHOOL_ACCOUNT, SCHOOL_PASSWORD
-from config import *
+from .key import SCHOOL_ACCOUNT, SCHOOL_PASSWORD
+from .config import *
 
 
 sys.setrecursionlimit(100)   # 设置最大递归层数为100

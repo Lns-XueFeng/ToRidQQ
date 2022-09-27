@@ -1,4 +1,7 @@
+import os.path
 import logging
+from time import sleep
+from datetime import datetime
 from smtplib import SMTP_SSL
 from email import encoders, utils
 from email.mime.text import MIMEText
@@ -7,9 +10,10 @@ from email.mime.multipart import MIMEMultipart
 
 import uiautomation
 
-from config import *
-from compare import CompareImage
-from key import MY_USER, MY_SENDER, MY_PASSWORD
+from .config import *
+from .internet import Internet
+from .compare import CompareImage
+from .key import MY_USER, MY_SENDER, MY_PASSWORD
 
 
 def _new_to_old() -> None:
@@ -94,6 +98,10 @@ def _capture_qq_window(name: str, new_image_path: str):
 
 
 def run(name: str):
+    if not os.path.exists("./images"):
+        os.mkdir("./images")
+    if not os.path.exists("./result"):
+        os.mkdir("./result")
     _capture_qq_window(name, NEW_IMAGE_PATH)
     match_result = _compare_two_images(NEW_IMAGE_PATH, OLD_IMAGE_PATH)
     if not match_result:
@@ -104,3 +112,34 @@ def run(name: str):
             return 'send success'
         return 'send failed'
     return 'image not equal'
+
+
+def main():
+    logging.basicConfig(
+        level=LOG_LEVEL,
+        filemode=A_MODE,
+        encoding=UTF_8,
+        filename=LOG_RESULT_PATH,
+    )
+    print(PRINT_START)
+    while True:
+        logging.info(datetime.now().strftime(TIME_FORMAT))
+        computer_internet = Internet.check_computer_internet()
+        if not computer_internet:
+            school_link_status = Internet.link_school_internet()
+            if school_link_status != 200:
+                logging.warning(LOG_WARN_TREE)
+                sleep(300)  # 五分钟后重试
+                continue
+        result = run(name=QQ_WINDOW_NAME)
+        if result == 'send success':
+            logging.info(LOG_INFO_TWO)
+            logging.info(LOG_INFO_TREE)
+        if result == 'send failed':
+            logging.warning(LOG_WARN_TWO)
+            logging.info(LOG_INFO_TREE)
+        if result == 'image not equal':
+            logging.info(LOG_INFO_FOUR)
+            logging.info(LOG_INFO_TREE)
+        sleep(60)  # 一分钟查看一次
+    print(PRINT_END)

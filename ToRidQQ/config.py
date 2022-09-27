@@ -2,9 +2,12 @@
 # 文件相关
 RB_MODE = 'rb'
 WB_MODE = 'wb'
-NEW_IMAGE_PATH = 'images/new_pic.png'
-OLD_IMAGE_PATH = 'images/old_pic.png'
+NEW_IMAGE_PATH = './images/new_pic.png'
+OLD_IMAGE_PATH = './images/old_pic.png'
+
 # logging 日志需记录的常量
+LOG_LEVEL = "INFO"
+LOG_RESULT_PATH = "./result/results.log"
 LOG_ERROR_ONE = "连接校园网Error："
 LOG_WARN_ONE = "可能切换了QQ窗口：进行一次覆盖"
 LOG_WARN_TWO = "邮件发送：Fail"
@@ -17,21 +20,18 @@ LOG_INFO_FOUR = "图片相似度大于99%->判定为信息重复：本次不发�
 LOG_INGO_FIVE = "成功连接校园网"
 
 
-# -----------------------------get_sms.py-----------------------------
-LOG_LEVEL = "INFO"
-A_MODE = "a"
-UTF_8 = "utf-8"
-LOG_RESULT_PATH = "result/results.log"
-PRINT_START = "程序开始监控QQ聊天窗口"
-PRINT_END = "程序结束监控QQ意外退出"
-TIME_FORMAT = "%Y-%m-%d %H:%M"
-QQ_WINDOW_NAME = '团结的火药桶'
-
-
 # -----------------------------engine.py-----------------------------
 # send_qq 函数
 SMTP_QQ_COM = "smtp.qq.com"
 SEND_EMAIL_ERROR = "发送QQ邮件Error："
+
+# main函数
+A_MODE = "a"
+UTF_8 = "utf-8"
+PRINT_START = "程序开始监控QQ聊天窗口"
+PRINT_END = "程序结束监控QQ意外退出"
+TIME_FORMAT = "%Y-%m-%d %H:%M"
+QQ_WINDOW_NAME = '团结的火药桶'
 
 # make_mail 函数
 MY_NAME = 'Lns-XueFeng'

@@ -1,14 +1,16 @@
 import unittest
 from unittest.mock import MagicMock
-from email import encoders, utils
-from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
-from email.mime.multipart import MIMEMultipart
 
-import engine
+from ToRidQQ import engine
 
 
 class TestEngine(unittest.TestCase):
+    @unittest.skip
+    def test_capture_qq_window(self):
+        engine._capture_qq_window(
+            "团结的火药桶",
+            "./test_capture_image/new_pic.png",
+        )
 
     def test_compare_two_same_images(self):
         """测试验证两张图片相似"""
