@@ -1,6 +1,6 @@
 import unittest
 
-from ToRidQQ.compare import CompareImage
+from toridqq.compare import CompareImage
 
 
 class TestCompare(unittest.TestCase):

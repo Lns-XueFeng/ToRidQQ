@@ -1,4 +1,4 @@
-from ToRidQQ import main
+from toridqq import main
 
 """
 1.打开QQ -> 2.打开群聊 -> 3.运行脚本 -> 4.确保窗口无遮挡

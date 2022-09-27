@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import MagicMock
 
-from ToRidQQ import engine
+from toridqq import engine
 
 
 class TestEngine(unittest.TestCase):
