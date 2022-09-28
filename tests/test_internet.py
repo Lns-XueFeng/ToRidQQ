@@ -14,5 +14,6 @@ class TestInternet(unittest.TestCase):
 
     def test_check_computer_internet(self):
         """测试此计算机是否联网, 联网则result为True"""
-        result = Internet.check_computer_internet()
+        internet = Internet()
+        result = internet.check_computer_internet()
         self.assertTrue(result, True)

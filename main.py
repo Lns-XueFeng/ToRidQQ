@@ -1,4 +1,4 @@
-from toridqq import main
+from toridqq.torid import ToRid
 
 """
 1.打开QQ -> 2.打开群聊 -> 3.运行脚本 -> 4.确保窗口无遮挡
@@ -15,9 +15,11 @@ from toridqq import main
     
 未来可能的扩展：
     命令行方面的支持
+    可选监控多个消息窗口
     多进程支持多个窗口进行监控
 """
 
 
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    to_rid_qq = ToRid()
+    to_rid_qq.main()
