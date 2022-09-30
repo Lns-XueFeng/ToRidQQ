@@ -1,4 +1,4 @@
-from toridqq.torid import ToRid
+from toridqq import ToRid
 
 """
 1.打开QQ -> 2.打开群聊 -> 3.运行脚本 -> 4.确保窗口无遮挡
@@ -24,5 +24,5 @@ from toridqq.torid import ToRid
 
 
 if __name__ == "__main__":
-    to_rid_qq = ToRid()
+    to_rid_qq = ToRid("团结的火药桶")
     to_rid_qq.main()

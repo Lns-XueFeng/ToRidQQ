@@ -2,7 +2,7 @@ import unittest
 
 import requests
 
-from toridqq.internet import Internet
+from toridqq import Internet
 
 
 class TestInternet(unittest.TestCase):

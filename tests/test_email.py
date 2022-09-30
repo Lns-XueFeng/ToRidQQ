@@ -1,7 +1,6 @@
 import unittest
-from unittest.mock import MagicMock
 
-from toridqq.email import Email
+from toridqq import Email
 
 
 class TestEmail(unittest.TestCase):

@@ -2,7 +2,6 @@ import logging
 
 from PIL import Image
 
-from .torid import ToRid
 from .config import *
 
 
@@ -10,6 +9,13 @@ class CompareImage:
     def __init__(self, new_image_path: str, old_image_path: str):
         self._image_one = Image.open(new_image_path)
         self._image_two = Image.open(old_image_path)
+
+    @classmethod
+    def new_to_old(cls) -> None:
+        with open(OLD_IMAGE_PATH, WB_MODE) as old:
+            with open(NEW_IMAGE_PATH, RB_MODE) as new:
+                new_image_bytes = new.read()
+                old.write(new_image_bytes)
 
     def _compare_two_pixel(self, x: int, y: int) -> bool:
         """
@@ -32,7 +38,7 @@ class CompareImage:
             return True
         return False
 
-    def compare_images_size(self) -> bool:
+    def _compare_images_size(self) -> bool:
         """
         比较两个图片的尺寸是否相等
         :if 相等 return True
@@ -44,7 +50,7 @@ class CompareImage:
             return True
         return False
 
-    def count_two_images_rate(self) -> float:
+    def _count_two_images_rate(self) -> float:
         """
         将俩图片进行比较
         :return: same_rate 图片相似度
@@ -69,18 +75,18 @@ class CompareImage:
 
     def compare_two_images(self):
         """
-            比较图片是否相同：
-            :return True -> 图片相同   False -> 图片不同
+        比较图片是否相同：
+        :return True -> 图片相同   False -> 图片不同
 
-            可能还缺判断图片相似度极低的情况下判断是不是捕获到的不是聊天窗口
-            """
-        if not self.compare_images_size():  # 如果两张图片大小就不一样可认定图片不同
+        可能还缺判断图片相似度极低的情况下判断是不是捕获到的不是聊天窗口
+        """
+        if not self._compare_images_size():   # 如果两张图片大小就不一样可认定图片不同
             # 造成大小不一样可能原因之一：换了获取信息的窗口, 所以需要覆盖一次图片
             logging.warning(LOG_WARN_ONE)
-            ToRid.new_to_old()  # 将新图片替换老图片
+            CompareImage.new_to_old()   # new_image -> old_image
             return False
 
-        same_rate = self.count_two_images_rate()
+        same_rate = self._count_two_images_rate()
         if same_rate > 0.99:  # 相似度大于99%认为图片相似
             return True
         else:

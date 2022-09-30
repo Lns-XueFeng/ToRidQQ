@@ -6,47 +6,58 @@ from datetime import datetime
 import uiautomation
 
 from .config import *
+from .email import Email
 from .internet import Internet
 from .compare import CompareImage
-from .email import Email
 
 
 class ToRid:
-    def __init__(self):
+    def __init__(self, name):
         if not os.path.exists("./images"):
             os.mkdir("./images")
         if not os.path.exists("./result"):
             os.mkdir("./result")
 
-        self.name = QQ_WINDOW_NAME
+        self.qq_window_name = name
+
+    def _compare_two_images(self):
+        self.compare = CompareImage(
+            NEW_IMAGE_PATH,
+            OLD_IMAGE_PATH
+        )
+        return self.compare.compare_two_images()
+
+    def _new_to_old(self):
+        return self.compare.new_to_old()
+
+    def _send_qq_email(self):
+        self.email = Email(self.qq_window_name)
+        return self.email.send_qq_email()
+
+    def _check_computer_internet(self):
         self.internet = Internet()
-        self.email = Email(self.name)
-        self.compare = CompareImage(NEW_IMAGE_PATH, OLD_IMAGE_PATH)
+        return self.internet.check_computer_internet()
+
+    def _link_school_internet(self):
+        return self.internet.link_school_internet()
 
     def _capture_qq_window(self, new_image_path: str):
         qq_box_win = uiautomation.WindowControl(
             searchDepth=1,
             ClassName=WINDOW_CLASS_NAME,
-            Name=self.name,
+            Name=self.qq_window_name,
         )
         qq_box_sms = qq_box_win.ListControl(Name=WINDOW_NAME)
         if qq_box_win.Exists(5):
             qq_box_sms.CaptureToImage(new_image_path)
 
-    @classmethod
-    def new_to_old(cls) -> None:
-        with open(OLD_IMAGE_PATH, WB_MODE) as old:
-            with open(NEW_IMAGE_PATH, RB_MODE) as new:
-                new_image_bytes = new.read()
-                old.write(new_image_bytes)
-
-    def run(self):
+    def _run(self):
         self._capture_qq_window(NEW_IMAGE_PATH)
-        match_result = self.compare.compare_two_images()
+        match_result = self._compare_two_images()
         if not match_result:
             logging.info(LOG_INFO_ONE)
-            ret = self.email.send_qq_email()
-            ToRid.new_to_old()  # new_image -> old_image
+            ret = self._send_qq_email()
+            self._new_to_old()  # new_image -> old_image
             if ret:
                 logging.info(LOG_INFO_TWO)
                 logging.info(LOG_INFO_TREE)
@@ -58,7 +69,7 @@ class ToRid:
         logging.info(LOG_INFO_TREE)
         return 'image not equal'
 
-    def main(self):
+    def main(self, name=""):
         logging.basicConfig(
             level=LOG_LEVEL,
             filemode=A_MODE,
@@ -68,13 +79,15 @@ class ToRid:
         print(PRINT_START)
         while True:
             logging.info(datetime.now().strftime(TIME_FORMAT))
-            computer_internet = self.internet.check_computer_internet()
+            computer_internet = self._check_computer_internet()
             if not computer_internet:
-                school_link_status = self.internet.link_school_internet()
+                school_link_status = self._link_school_internet()
                 if school_link_status != 200:
                     logging.warning(LOG_WARN_TREE)
                     sleep(300)  # 五分钟后重试
                     continue
-            self.run()
+            self._run()
+            if name == "test":
+                break
             sleep(60)  # 一分钟查看一次
         print(PRINT_END)
