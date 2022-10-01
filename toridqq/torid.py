@@ -51,7 +51,7 @@ class ToRid:
         if qq_box_win.Exists(5):
             qq_box_sms.CaptureToImage(new_image_path)
 
-    def _run(self):
+    def _capture_and_match(self):
         self._capture_qq_window(NEW_IMAGE_PATH)
         match_result = self._compare_two_images()
         if not match_result:
@@ -69,7 +69,7 @@ class ToRid:
         logging.info(LOG_INFO_TREE)
         return 'image not equal'
 
-    def main(self, name=""):
+    def run_to_rid(self, name=""):
         logging.basicConfig(
             level=LOG_LEVEL,
             filemode=A_MODE,
@@ -86,7 +86,7 @@ class ToRid:
                     logging.warning(LOG_WARN_TREE)
                     sleep(300)  # 五分钟后重试
                     continue
-            self._run()
+            self._capture_and_match()
             if name == "test":
                 break
             sleep(60)  # 一分钟查看一次
