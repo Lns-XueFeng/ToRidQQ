@@ -69,7 +69,7 @@ class ToRid:
         logging.info(LOG_INFO_TREE)
         return 'image not equal'
 
-    def run_to_rid(self, name=""):
+    def run_to_rid(self, time=300, name=""):
         logging.basicConfig(
             level=LOG_LEVEL,
             filemode=A_MODE,
@@ -84,7 +84,7 @@ class ToRid:
                 school_link_status = self._link_school_internet()
                 if school_link_status != 200:
                     logging.warning(LOG_WARN_TREE)
-                    sleep(300)  # 五分钟后重试
+                    sleep(time)  # 五分钟后重试
                     continue
             self._capture_and_match()
             if name == "test":
