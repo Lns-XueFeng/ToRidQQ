@@ -16,7 +16,6 @@ parser.add_argument("-c", "--check", action="store_true", default=True, help="�
 parser.add_argument("-r", "--register", action="store_true", help="是否校园网自动协议登录(校园网才可用,修改源代码进行自定义)")
 args = parser.parse_args(sys.argv[1:])
 
-# 从参数获取
 to_rid_qq = ToRidQQ(args.name)
 
 if args.open:
