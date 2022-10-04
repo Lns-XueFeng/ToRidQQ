@@ -62,5 +62,5 @@ class Internet:
     def check_computer_internet() -> bool:
         res = os.system(PING_BAIDU)
         if res == 0:
-            return True
+            return True   # 有网络
         return False
