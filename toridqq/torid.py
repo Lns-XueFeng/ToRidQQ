@@ -76,7 +76,7 @@ class ToRid:
             encoding=UTF_8,
             filename=LOG_RESULT_PATH,
         )
-        print(PRINT_START)
+        print(PRINT_START if name != "test" else "测试开始")
         while True:
             logging.info(datetime.now().strftime(TIME_FORMAT))
             computer_internet = self._check_computer_internet()
@@ -90,4 +90,4 @@ class ToRid:
             if name == "test":
                 break
             sleep(60)  # 一分钟查看一次
-        print(PRINT_END)
+        print(PRINT_END if name != "test" else "测试完成")

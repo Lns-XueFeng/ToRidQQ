@@ -10,3 +10,22 @@ INFO:root:图片相似度：100.0%
 INFO:root:图片不相似度：0.0%
 INFO:root:图片相似度大于99%->判定为信息重复：本次不发送邮件提醒
 INFO:root:
+INFO:root:2022-10-04 18:20
+INFO:root:图片相似度：76.1%
+INFO:root:图片不相似度：23.9%
+INFO:root:发现新消息：Send
+INFO:root:邮件发送：Success
+INFO:root:
+
+INFO:root:2022-10-04 18:28
+INFO:root:图片相似度：100.0%
+INFO:root:图片不相似度：0.0%
+INFO:root:图片相似度大于99%->判定为信息重复：本次不发送邮件提醒
+INFO:root:
+
+INFO:root:2022-10-04 18:29
+INFO:root:图片相似度：100.0%
+INFO:root:图片不相似度：0.0%
+INFO:root:图片相似度大于99%->判定为信息重复：本次不发送邮件提醒
+INFO:root:
+
