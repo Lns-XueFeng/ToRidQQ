@@ -21,11 +21,7 @@ LOG_INGO_FIVE = "成功连接校园网"
 
 
 # -----------------------------torid.py-----------------------------
-# send_qq 函数
-SMTP_QQ_COM = "smtp.qq.com"
-SEND_EMAIL_ERROR = "发送QQ邮件Error："
-
-# main函数
+# run_to_rid
 A_MODE = "a"
 UTF_8 = "utf-8"
 PRINT_START = "程序开始监控QQ聊天窗口"
@@ -33,7 +29,17 @@ PRINT_END = "程序结束监控QQ意外退出"
 TIME_FORMAT = "%Y-%m-%d %H:%M"
 QQ_WINDOW_NAME = '团结的火药桶'
 
-# make_mail 函数
+# _capture_qq_window
+WINDOW_CLASS_NAME = 'TXGuiFoundation'
+WINDOW_NAME = "消息"
+
+
+# -----------------------------email.py-----------------------------
+# send_qq_email 函数
+SMTP_QQ_COM = "smtp.qq.com"
+SEND_EMAIL_ERROR = "发送QQ邮件Error："
+
+# _generate_email 函数
 MY_NAME = 'Lns-XueFeng'
 EMAIL_SUBJECT = "来消息啦"
 FORM, TO, SUBJECT, DATE = 'From', 'To', 'Subject', 'Date'
@@ -41,10 +47,6 @@ MIME_NAME, MIME_FORMAT = 'image', 'png'
 CONTENT_DISPOSITION, ATTACHMENT = 'Content-Disposition', 'attachment'
 CONTENT_ID, NEW_PIC_CLUE = 'Content-ID', "<new_pic.png>"
 X_ATTACHMENT_ID, NEW_PIC_PNG = 'X-Attachment-Id', 'new_pic.png'
-
-# run 函数
-WINDOW_CLASS_NAME = 'TXGuiFoundation'
-WINDOW_NAME = "消息"
 
 
 # -----------------------------compare.py-----------------------------
