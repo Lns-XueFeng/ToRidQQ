@@ -13,35 +13,35 @@ from .compare import CompareImage
 
 class ToRid:
     def __init__(self, name):
-        if not os.path.exists("./images"):
-            os.mkdir("./images")
-        if not os.path.exists("./result"):
-            os.mkdir("./result")
+        if not os.path.exists(RELATIVE_IMAGES):
+            os.mkdir(RELATIVE_IMAGES)
+        if not os.path.exists(RELATIVE_RESULT):
+            os.mkdir(RELATIVE_RESULT)
 
         self.qq_window_name = name
 
-    def _compare_two_images(self):
+    def _compare_two_images(self) -> bool:
         self.compare = CompareImage(
             NEW_IMAGE_PATH,
             OLD_IMAGE_PATH
         )
         return self.compare.compare_two_images()
 
-    def _new_to_old(self):
+    def _new_to_old(self) -> None:
         return self.compare.new_to_old()
 
-    def _send_qq_email(self):
+    def _send_qq_email(self) -> bool:
         self.email = Email(self.qq_window_name)
         return self.email.send_qq_email()
 
-    def _check_computer_internet(self):
+    def _check_computer_internet(self) -> bool:
         self.internet = Internet()
         return self.internet.check_computer_internet()
 
-    def _link_school_internet(self):
+    def _link_school_internet(self) -> int or None:
         return self.internet.link_school_internet()
 
-    def _capture_qq_window(self, new_image_path: str):
+    def _capture_qq_window(self, new_image_path: str) -> None:
         qq_box_win = uiautomation.WindowControl(
             searchDepth=1,
             ClassName=WINDOW_CLASS_NAME,
@@ -51,7 +51,7 @@ class ToRid:
         if qq_box_win.Exists(5):
             qq_box_sms.CaptureToImage(new_image_path)
 
-    def _capture_and_match(self):
+    def _capture_and_match(self) -> str:
         self._capture_qq_window(NEW_IMAGE_PATH)
         match_result = self._compare_two_images()
         if not match_result:
@@ -61,22 +61,22 @@ class ToRid:
             if ret:
                 logging.info(LOG_INFO_TWO)
                 logging.info(LOG_INFO_TREE)
-                return 'send success'
+                return SEND_SUCCESS
             logging.warning(LOG_WARN_TWO)
             logging.info(LOG_INFO_TREE)
-            return 'send failed'
+            return SEND_FAILED
         logging.info(LOG_INFO_FOUR)
         logging.info(LOG_INFO_TREE)
-        return 'image not equal'
+        return IMAGES_NOT_EQUAL
 
-    def run_to_rid(self, time=300, name=""):
+    def run_to_rid(self, time=300, name="") -> None:
         logging.basicConfig(
             level=LOG_LEVEL,
             filemode=A_MODE,
             encoding=UTF_8,
             filename=LOG_RESULT_PATH,
         )
-        print(PRINT_START if name != "test" else "测试开始")
+        print(PRINT_START if name != TEST else TEST_BEGIN)
         while True:
             logging.info(datetime.now().strftime(TIME_FORMAT))
             computer_internet = self._check_computer_internet()
@@ -87,7 +87,7 @@ class ToRid:
                     sleep(time)  # 五分钟后重试
                     continue
             self._capture_and_match()
-            if name == "test":
+            if name == TEST:
                 break
             sleep(60)  # 一分钟查看一次
-        print(PRINT_END if name != "test" else "测试完成")
+        print(PRINT_END if name != TEST else TEST_FINISHED)

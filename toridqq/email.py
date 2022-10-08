@@ -49,5 +49,4 @@ class Email:
         except Exception as result:
             logging.error(f"{SEND_EMAIL_ERROR}{result}")
             return False
-
         return True

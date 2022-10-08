@@ -73,7 +73,7 @@ class CompareImage:
 
         return same_rate
 
-    def compare_two_images(self):
+    def compare_two_images(self) -> bool:
         """
         比较图片是否相同：
         :return True -> 图片相同   False -> 图片不同

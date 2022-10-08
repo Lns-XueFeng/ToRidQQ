@@ -1,9 +1,9 @@
 # -----------------------------all the py-----------------------------
 # 文件相关
-RB_MODE = 'rb'
-WB_MODE = 'wb'
-NEW_IMAGE_PATH = './images/new_pic.png'
-OLD_IMAGE_PATH = './images/old_pic.png'
+RB_MODE = "rb"
+WB_MODE = "wb"
+NEW_IMAGE_PATH = "./images/new_pic.png"
+OLD_IMAGE_PATH = "./images/old_pic.png"
 
 # logging 日志需记录的常量
 LOG_LEVEL = "INFO"
@@ -21,32 +21,42 @@ LOG_INGO_FIVE = "成功连接校园网"
 
 
 # -----------------------------torid.py-----------------------------
+# __init__
+RELATIVE_IMAGES = "./images"
+RELATIVE_RESULT = "./result"
+
+# _capture_qq_window
+WINDOW_CLASS_NAME = "TXGuiFoundation"
+WINDOW_NAME = "消息"
+SEND_SUCCESS = "send success"
+SEND_FAILED = "send failed"
+IMAGES_NOT_EQUAL = "images not equal"
+
 # run_to_rid
 A_MODE = "a"
 UTF_8 = "utf-8"
 PRINT_START = "程序开始监控QQ聊天窗口"
 PRINT_END = "程序结束监控QQ意外退出"
 TIME_FORMAT = "%Y-%m-%d %H:%M"
-QQ_WINDOW_NAME = '团结的火药桶'
-
-# _capture_qq_window
-WINDOW_CLASS_NAME = 'TXGuiFoundation'
-WINDOW_NAME = "消息"
+QQ_WINDOW_NAME = "团结的火药桶"
+TEST = "test"
+TEST_BEGIN = "test begin"
+TEST_FINISHED = "test finished"
 
 
 # -----------------------------email.py-----------------------------
+# _generate_email 函数
+MY_NAME = "Lns-XueFeng"
+EMAIL_SUBJECT = "来消息啦"
+FORM, TO, SUBJECT, DATE = "From", "To", "Subject", "Date"
+MIME_NAME, MIME_FORMAT = "image", "png"
+CONTENT_DISPOSITION, ATTACHMENT = "Content-Disposition", "attachment"
+CONTENT_ID, NEW_PIC_CLUE = "Content-ID", "<new_pic.png>"
+X_ATTACHMENT_ID, NEW_PIC_PNG = "X-Attachment-Id", "new_pic.png"
+
 # send_qq_email 函数
 SMTP_QQ_COM = "smtp.qq.com"
 SEND_EMAIL_ERROR = "发送QQ邮件Error："
-
-# _generate_email 函数
-MY_NAME = 'Lns-XueFeng'
-EMAIL_SUBJECT = "来消息啦"
-FORM, TO, SUBJECT, DATE = 'From', 'To', 'Subject', 'Date'
-MIME_NAME, MIME_FORMAT = 'image', 'png'
-CONTENT_DISPOSITION, ATTACHMENT = 'Content-Disposition', 'attachment'
-CONTENT_ID, NEW_PIC_CLUE = 'Content-ID', "<new_pic.png>"
-X_ATTACHMENT_ID, NEW_PIC_PNG = 'X-Attachment-Id', 'new_pic.png'
 
 
 # -----------------------------compare.py-----------------------------
