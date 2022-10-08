@@ -42,6 +42,11 @@ class ToRid:
         return self.internet.link_school_internet()
 
     def _capture_qq_window(self, new_image_path: str) -> None:
+        """
+        调用uiautomation对指定qq窗口进行捕捉截图
+        :param new_image_path:
+        :return:
+        """
         qq_box_win = uiautomation.WindowControl(
             searchDepth=1,
             ClassName=WINDOW_CLASS_NAME,
@@ -52,6 +57,11 @@ class ToRid:
             qq_box_sms.CaptureToImage(new_image_path)
 
     def _capture_and_match(self) -> str:
+        """
+        捕捉图片以及对其和前一张捕捉的图片进行相似性比较
+        如果图片不同，则判断为新消息，发送邮件
+        :return:
+        """
         self._capture_qq_window(NEW_IMAGE_PATH)
         match_result = self._compare_two_images()
         if not match_result:
@@ -70,6 +80,12 @@ class ToRid:
         return IMAGES_NOT_EQUAL
 
     def run_to_rid(self, time=300, name="") -> None:
+        """
+        主要逻辑函数，对指定窗口进行轮询监控并进行一些意外操作
+        :param time: 监控时间
+        :param name: QQ窗口名字
+        :return:
+        """
         logging.basicConfig(
             level=LOG_LEVEL,
             filemode=A_MODE,

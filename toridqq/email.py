@@ -14,6 +14,11 @@ class Email:
         self.name = name
 
     def _generate_email(self, new_image_path: str) -> MIMEMultipart:
+        """
+        生成邮件
+        :param new_image_path: 图片路径
+        :return: None
+        """
         # 构造MIMEMultipart对象做为根容器
         main_msg = MIMEMultipart()
         html_msg = MIMEText('<p style="font-size:20px; color:pink;"> 新消息的截图 </p>'
@@ -40,6 +45,10 @@ class Email:
         return main_msg
 
     def send_qq_email(self) -> bool:
+        """
+        发送邮件
+        :return: True or False
+        """
         main_msg = self._generate_email(NEW_IMAGE_PATH)
         try:
             server = SMTP_SSL(SMTP_QQ_COM, 465)

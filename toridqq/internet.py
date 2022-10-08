@@ -40,6 +40,10 @@ class Internet:
         }
 
     def link_school_internet(self) -> int or None:
+        """
+        尝试协议登录校园网
+        :return: 状态码 or None
+        """
         res = None
         try:
             res = requests.get(
@@ -60,6 +64,10 @@ class Internet:
 
     @staticmethod
     def check_computer_internet() -> bool:
+        """
+        检查计算机是否有网络
+        :return: True or False
+        """
         res = os.system(PING_BAIDU)
         if res == 0:
             return True   # 有网络

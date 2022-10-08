@@ -14,3 +14,6 @@ class ToRidQQ(ToRid):
 
     def open_window(self):
         pass
+
+    def monitor_window(self):
+        pass
