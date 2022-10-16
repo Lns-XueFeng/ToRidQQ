@@ -3,6 +3,7 @@
 
 <h3>目的：</h3>
 <p>实现程序自动监控指定QQ消息窗口并将新消息发送至我的邮箱, 从而实现我的手机无QQ化</p>
+<p>我的本意为：监控需要随时知道通知的群聊, 避免错过重要通知且不让我去使用QQ</p>
 
 <h3>使用：</h3>
 <ol>
@@ -12,6 +13,7 @@
     <li>启动程序：python -m toridqq your_qq_window_name</li>
     <li>注：程序每轮询一次窗口便会激活一次窗口</li>
 </ol>
+<h4>注意：不要打开多个窗口, 目前仅支持一个窗口</h4>
 
 <h3>原因：</h3>
 <ol>
@@ -51,8 +53,6 @@
     <li>python -m toridqq -r your_qq_window_name</li>
     <li>python -m toridqq --register your_qq_window_name</li>
 </ul>
-
-<h4>注意：不要打开多个窗口, 目前仅支持一个窗口</h4>
 
 <h3>吐槽：</h3>
 <p>其实摆脱QQ的方法有很多, 比如：</p>
