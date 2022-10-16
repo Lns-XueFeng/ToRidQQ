@@ -1,4 +1,8 @@
+import subprocess
+
 from .torid import ToRid
+
+from .config import QQ_EXE_PATH
 
 
 class ToRidQQ(ToRid):
@@ -6,8 +10,7 @@ class ToRidQQ(ToRid):
         super(ToRidQQ, self).__init__(name)
 
     def open_qq(self):
-        # subprocess.Popen(["F:\QQ\Bin\QQScLauncher.exe"])
-        pass
+        subprocess.Popen([QQ_EXE_PATH])
 
     def register(self):
         pass

@@ -54,6 +54,8 @@ class ToRid:
         )
         qq_box_sms = qq_box_win.ListControl(Name=WINDOW_NAME)
         if qq_box_win.Exists(5):
+            qq_box_win.SetActive()
+            qq_box_win.MoveToCenter()
             qq_box_sms.CaptureToImage(new_image_path)
 
     def _capture_and_match(self) -> str:

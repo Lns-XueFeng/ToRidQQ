@@ -10,7 +10,7 @@ from .internet import Internet
 parser = argparse.ArgumentParser()
 parser.add_argument("name", nargs="?", default="团结的火药桶", help="设置将要监控聊天窗口名称")
 parser.add_argument("-t", "--time", nargs="?", default=300, help="设置程序监控窗口间隔时间")
-parser.add_argument("-o", "--open", action="store_true", help="是否自动打开并登录QQ")
+parser.add_argument("-o", "--open", action="store_true", help="是否自动打开并登录QQ(为避免读取用户账号密码请设置为自动登录)")
 # 默认在程序开始前进行一次网络检查, 注：运行时每次轮询亦会检测网络情况
 parser.add_argument("-c", "--check", action="store_true", default=True, help="是否检测计算机网络环境")
 parser.add_argument("-r", "--register", action="store_true", help="是否校园网自动协议登录(校园网才可用,修改源代码进行自定义)")
