@@ -23,7 +23,7 @@ class ToRid:
     def _compare_two_images(self) -> bool:
         self.compare = CompareImage(
             NEW_IMAGE_PATH,
-            OLD_IMAGE_PATH
+            OLD_IMAGE_PATH,
         )
         return self.compare.compare_two_images()
 
@@ -107,5 +107,5 @@ class ToRid:
             self._capture_and_match()
             if name == TEST:
                 break
-            sleep(60)  # 一分钟查看一次
+            sleep(time)  # 一分钟查看一次
         print(PRINT_END if name != TEST else TEST_FINISHED)
