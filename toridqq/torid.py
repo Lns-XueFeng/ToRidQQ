@@ -25,7 +25,7 @@ class ToRid:
         for qq_window_name in self.qq_window_name_list:
             if not os.path.exists("./{}".format(qq_window_name)):
                 os.mkdir(f"./{qq_window_name}")
-                with open("./model_images/new_pic.png", "rb") as fp:
+                with open("./images/new_pic.png", "rb") as fp:
                     data = fp.read()
                     with open(f"./{qq_window_name}/new_pic.png", "wb") as fp1:
                         fp1.write(data)
@@ -122,5 +122,5 @@ class ToRid:
 
             if name == TEST:
                 break
-            sleep(10)  # 一分钟查看一次
+            sleep(time)  # 一分钟查看一次
         print(PRINT_END if name != TEST else TEST_FINISHED)

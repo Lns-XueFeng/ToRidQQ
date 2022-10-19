@@ -16,7 +16,7 @@ class TestEngine(unittest.TestCase):
         to_rid._compare_two_images = MagicMock(return_value=True)
         to_rid._capture_qq_window = MagicMock(return_value=None)
         result = to_rid._capture_and_match()
-        self.assertEqual(result, 'model_images not equal')
+        self.assertEqual(result, 'images not equal')
 
     def test_run_send_success(self):
         """测试当图片不相似, 成功发送邮件"""
