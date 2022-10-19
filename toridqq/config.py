@@ -6,8 +6,8 @@ QQ_EXE_PATH = "F:\\QQ\\Bin\\QQScLauncher.exe"
 # 文件相关
 RB_MODE = "rb"
 WB_MODE = "wb"
-NEW_IMAGE_PATH = "./images/new_pic.png"
-OLD_IMAGE_PATH = "./images/old_pic.png"
+NEW_IMAGE_PATH = "./model_images/new_pic.png"
+OLD_IMAGE_PATH = "./model_images/old_pic.png"
 
 # logging 日志需记录的常量
 LOG_LEVEL = "INFO"
@@ -26,7 +26,7 @@ LOG_INGO_FIVE = "成功连接校园网"
 
 # -----------------------------torid.py-----------------------------
 # __init__
-RELATIVE_IMAGES = "./images"
+RELATIVE_IMAGES = "./model_images"
 RELATIVE_RESULT = "./result"
 
 # _capture_qq_window
@@ -34,7 +34,7 @@ WINDOW_CLASS_NAME = "TXGuiFoundation"
 WINDOW_NAME = "消息"
 SEND_SUCCESS = "send success"
 SEND_FAILED = "send failed"
-IMAGES_NOT_EQUAL = "images not equal"
+IMAGES_NOT_EQUAL = "model_images not equal"
 
 # run_to_rid
 A_MODE = "a"

@@ -10,7 +10,8 @@ class TestCompare(unittest.TestCase):
         """测试验证两张图片的尺寸相等"""
         compare = CompareImage(
             "test_same_images/test_new_pic.png",
-            "test_same_images/test_old_pic.png"
+            "test_same_images/test_old_pic.png",
+            "test",
         )
         result = compare._compare_images_size()
         self.assertTrue(result, True)
@@ -19,7 +20,8 @@ class TestCompare(unittest.TestCase):
         """测试验证两张图片的尺寸不相等"""
         compare = CompareImage(
             "test_size_images/test_new_pic.png",
-            "test_size_images/test_old_pic.png"
+            "test_size_images/test_old_pic.png",
+            "test",
         )
         result = compare._compare_images_size()
         self.assertFalse(result, False)
@@ -28,7 +30,8 @@ class TestCompare(unittest.TestCase):
         """测试验证两张图片相似"""
         compare = CompareImage(
             "test_same_images/test_new_pic.png",
-            "test_same_images/test_old_pic.png"
+            "test_same_images/test_old_pic.png",
+            "test",
         )
         result = compare._count_two_images_rate()
         self.assertEqual(result, 1.0)
@@ -37,7 +40,8 @@ class TestCompare(unittest.TestCase):
         """测试验证两张图片不相似"""
         compare = CompareImage(
             "test_nosame_images/test_new_pic.png",
-            "test_nosame_images/test_old_pic.png"
+            "test_nosame_images/test_old_pic.png",
+            "test",
         )
         result = compare._count_two_images_rate()
         self.assertNotEqual(result, 1.0)
@@ -47,6 +51,7 @@ class TestCompare(unittest.TestCase):
         compare = CompareImage(
             "test_same_images/test_new_pic.png",
             "test_same_images/test_old_pic.png",
+            "test",
         )
         result = compare.compare_two_images()
         self.assertTrue(result, True)
@@ -56,6 +61,7 @@ class TestCompare(unittest.TestCase):
         compare = CompareImage(
             "test_nosame_images/test_new_pic.png",
             "test_nosame_images/test_old_pic.png",
+            "test",
         )
         result = compare.compare_two_images()
         self.assertFalse(result, False)
@@ -66,6 +72,7 @@ class TestCompare(unittest.TestCase):
         compare = CompareImage(
             "test_size_images/test_new_pic.png",
             "test_size_images/test_old_pic.png",
+            "test",
         )
         result = compare.compare_two_images()
         self.assertFalse(result, False)
@@ -76,6 +83,7 @@ class TestCompare(unittest.TestCase):
         compare = CompareImage(
             "test_same_images/test_new_pic.png",
             "test_same_images/test_old_pic.png",
+            "test",
         )
         result = compare.compare_two_images()
         self.assertTrue(result, True)

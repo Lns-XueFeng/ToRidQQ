@@ -17,7 +17,6 @@ parser.add_argument("-r", "--register", action="store_true", help="是否校园�
 args = parser.parse_args(sys.argv[1:])
 
 to_rid_qq = ToRidQQ(args.name)
-print(args.name)
 
 if args.open:
     to_rid_qq.open_qq()

@@ -25,7 +25,7 @@ class ToRid:
         for qq_window_name in self.qq_window_name_list:
             if not os.path.exists("./{}".format(qq_window_name)):
                 os.mkdir(f"./{qq_window_name}")
-                with open("./images/new_pic.png", "rb") as fp:
+                with open("./model_images/new_pic.png", "rb") as fp:
                     data = fp.read()
                     with open(f"./{qq_window_name}/new_pic.png", "wb") as fp1:
                         fp1.write(data)
