@@ -6,14 +6,14 @@ from .config import *
 
 
 class CompareImage:
-    def __init__(self, new_image_path: str, old_image_path: str):
+    def __init__(self, new_image_path: str, old_image_path: str, qq_window_name):
         self._image_one = Image.open(new_image_path)
         self._image_two = Image.open(old_image_path)
+        self.qq_window_name = qq_window_name
 
-    @classmethod
-    def new_to_old(cls) -> None:
-        with open(OLD_IMAGE_PATH, WB_MODE) as old:
-            with open(NEW_IMAGE_PATH, RB_MODE) as new:
+    def new_to_old(self) -> None:
+        with open(f"./{self.qq_window_name}/old_pic.png", WB_MODE) as old:
+            with open(f"./{self.qq_window_name}/new_pic.png", RB_MODE) as new:
                 new_image_bytes = new.read()
                 old.write(new_image_bytes)
 
@@ -83,7 +83,7 @@ class CompareImage:
         if not self._compare_images_size():   # 如果两张图片大小就不一样可认定图片不同
             # 造成大小不一样可能原因之一：换了获取信息的窗口, 所以需要覆盖一次图片
             logging.warning(LOG_WARN_ONE)
-            CompareImage.new_to_old()   # new_image -> old_image
+            self.new_to_old()   # new_image -> old_image
             return False
 
         same_rate = self._count_two_images_rate()

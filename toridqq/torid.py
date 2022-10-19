@@ -12,18 +12,31 @@ from .compare import CompareImage
 
 
 class ToRid:
-    def __init__(self, name):
-        if not os.path.exists(RELATIVE_IMAGES):
-            os.mkdir(RELATIVE_IMAGES)
+    def __init__(self, name_list):
         if not os.path.exists(RELATIVE_RESULT):
             os.mkdir(RELATIVE_RESULT)
 
-        self.qq_window_name = name
+        self.qq_window_name_list = name_list
+        self.qq_window_name = None
+        # 为每一个需监控的窗口创建其图片文件夹并初始化其new和old的图片
+        self.init_new_and_old()
+
+    def init_new_and_old(self):
+        for qq_window_name in self.qq_window_name_list:
+            if not os.path.exists("./{}".format(qq_window_name)):
+                os.mkdir(f"./{qq_window_name}")
+                with open("./images/new_pic.png", "rb") as fp:
+                    data = fp.read()
+                    with open(f"./{qq_window_name}/new_pic.png", "wb") as fp1:
+                        fp1.write(data)
+                    with open(f"./{qq_window_name}/old_pic.png", "wb") as fp2:
+                        fp2.write(data)
 
     def _compare_two_images(self) -> bool:
         self.compare = CompareImage(
-            NEW_IMAGE_PATH,
-            OLD_IMAGE_PATH,
+            f"./{self.qq_window_name}/new_pic.png",
+            f"./{self.qq_window_name}/old_pic.png",
+            self.qq_window_name,
         )
         return self.compare.compare_two_images()
 
@@ -41,10 +54,9 @@ class ToRid:
     def _link_school_internet(self) -> int or None:
         return self.internet.link_school_internet()
 
-    def _capture_qq_window(self, new_image_path: str) -> None:
+    def _capture_qq_window(self) -> None:
         """
         调用uiautomation对指定qq窗口进行捕捉截图
-        :param new_image_path:
         :return:
         """
         qq_box_win = uiautomation.WindowControl(
@@ -56,7 +68,7 @@ class ToRid:
         if qq_box_win.Exists(5):
             qq_box_win.SetActive()
             qq_box_win.MoveToCenter()
-            qq_box_sms.CaptureToImage(new_image_path)
+            qq_box_sms.CaptureToImage(f"./{self.qq_window_name}/new_pic.png")
 
     def _capture_and_match(self) -> str:
         """
@@ -64,7 +76,7 @@ class ToRid:
         如果图片不同，则判断为新消息，发送邮件
         :return:
         """
-        self._capture_qq_window(NEW_IMAGE_PATH)
+        self._capture_qq_window()
         match_result = self._compare_two_images()
         if not match_result:
             logging.info(LOG_INFO_ONE)
@@ -104,8 +116,11 @@ class ToRid:
                     logging.warning(LOG_WARN_TREE)
                     sleep(time)  # 五分钟后重试
                     continue
-            self._capture_and_match()
+            for qq_window_name in self.qq_window_name_list:
+                self.qq_window_name = qq_window_name   # 更新self.qq_window_name为当前指向window_name
+                self._capture_and_match()
+
             if name == TEST:
                 break
-            sleep(time)  # 一分钟查看一次
+            sleep(10)  # 一分钟查看一次
         print(PRINT_END if name != TEST else TEST_FINISHED)

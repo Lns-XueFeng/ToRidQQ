@@ -31,11 +31,11 @@ class Email:
         main_msg[DATE] = utils.formatdate()
 
         # 添加附件就是加上一个MIMEBase，从本地读取一个图片:
-        with open(new_image_path, RB_MODE) as f:
+        with open("./{}/new_pic.png".format(self.name), RB_MODE) as f:
             # 设置附件的MIME和文件名，这里是png类型:
-            mime = MIMEBase(MIME_NAME, MIME_FORMAT, filename=NEW_IMAGE_PATH)
+            mime = MIMEBase(MIME_NAME, MIME_FORMAT, filename="./{}/new_pic.png".format(self.name))
             # 加上必要的头信息:
-            mime.add_header(CONTENT_DISPOSITION, ATTACHMENT, filename=NEW_IMAGE_PATH)
+            mime.add_header(CONTENT_DISPOSITION, ATTACHMENT, filename="./{}/new_pic.png".format(self.name))
             mime.add_header(CONTENT_ID, NEW_PIC_CLUE)
             mime.add_header(X_ATTACHMENT_ID, NEW_PIC_PNG)
             mime.set_payload(f.read())

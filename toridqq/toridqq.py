@@ -6,8 +6,8 @@ from .config import QQ_EXE_PATH
 
 
 class ToRidQQ(ToRid):
-    def __init__(self, name):
-        super(ToRidQQ, self).__init__(name)
+    def __init__(self, name_list):
+        super(ToRidQQ, self).__init__(name_list)
 
     def open_qq(self):
         subprocess.Popen([QQ_EXE_PATH])

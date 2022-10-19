@@ -27,6 +27,15 @@
 
 <h3>简单运行：</h3>
 <p>克隆到本地后, 可通过easy_to_rid.py脚本运行, 只需要修改name参数</p>
+<p>注意：name参数是一个列表，填写需要监控的窗口名称</p>
+
+<h3>命令行运行：</h3>
+<ul>
+    <li>如果你只需要监控一个窗口：</li>
+    <p>python -m toridqq your_qq_window_name</p>
+    <li>如果你需要监控多个窗口(空格分隔window_names)：</li>
+    <p>监控n个：python -m toridqq your_qq_window_name1 your_qq_window_name2</p>
+</ul>
 
 <h3>自定义间隔时间：</h3>
 <p>自定义程序监控指定窗口的轮询间隔时间</p>
