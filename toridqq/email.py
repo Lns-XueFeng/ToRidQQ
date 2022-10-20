@@ -13,10 +13,9 @@ class Email:
     def __init__(self, name: str):
         self.name = name
 
-    def _generate_email(self, new_image_path: str) -> MIMEMultipart:
+    def _generate_email(self) -> MIMEMultipart:
         """
         生成邮件
-        :param new_image_path: 图片路径
         :return: None
         """
         # 构造MIMEMultipart对象做为根容器
@@ -31,11 +30,11 @@ class Email:
         main_msg[DATE] = utils.formatdate()
 
         # 添加附件就是加上一个MIMEBase，从本地读取一个图片:
-        with open("./{}/new_pic.png".format(self.name), RB_MODE) as f:
+        with open(USER_NEW_IMAGES.format(self.name), RB_MODE) as f:
             # 设置附件的MIME和文件名，这里是png类型:
-            mime = MIMEBase(MIME_NAME, MIME_FORMAT, filename="./{}/new_pic.png".format(self.name))
+            mime = MIMEBase(MIME_NAME, MIME_FORMAT, filename=USER_NEW_IMAGES.format(self.name))
             # 加上必要的头信息:
-            mime.add_header(CONTENT_DISPOSITION, ATTACHMENT, filename="./{}/new_pic.png".format(self.name))
+            mime.add_header(CONTENT_DISPOSITION, ATTACHMENT, filename=USER_NEW_IMAGES.format(self.name))
             mime.add_header(CONTENT_ID, NEW_PIC_CLUE)
             mime.add_header(X_ATTACHMENT_ID, NEW_PIC_PNG)
             mime.set_payload(f.read())
@@ -49,7 +48,7 @@ class Email:
         发送邮件
         :return: True or False
         """
-        main_msg = self._generate_email(NEW_IMAGE_PATH)
+        main_msg = self._generate_email()
         try:
             server = SMTP_SSL(SMTP_QQ_COM, 465)
             server.login(MY_SENDER, MY_PASSWORD)

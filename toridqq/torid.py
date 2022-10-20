@@ -18,24 +18,31 @@ class ToRid:
 
         self.qq_window_name_list = name_list
         self.qq_window_name = None
-        # 为每一个需监控的窗口创建其图片文件夹并初始化其new和old的图片
         self.init_new_and_old()
 
-    def init_new_and_old(self):
+    def init_new_and_old(self) -> None:
+        """
+        在类初始化时循环检查是否创建了对应每一个窗口的图片文件夹以及其图片
+        :return:
+        """
         for qq_window_name in self.qq_window_name_list:
-            if not os.path.exists("./{}".format(qq_window_name)):
-                os.mkdir(f"./{qq_window_name}")
-                with open("./images/new_pic.png", "rb") as fp:
-                    data = fp.read()
-                    with open(f"./{qq_window_name}/new_pic.png", "wb") as fp1:
-                        fp1.write(data)
-                    with open(f"./{qq_window_name}/old_pic.png", "wb") as fp2:
-                        fp2.write(data)
+            user_images = SET_USER_IMAGES.format(qq_window_name)
+            if not os.path.exists(user_images):
+                os.mkdir(user_images)
+                self.create_images(qq_window_name)
+
+    def create_images(self, qq_window_name) -> None:
+        with open(MODEL_IMAGE_PATH, RB_MODE) as fp:
+            data = fp.read()
+            with open(USER_NEW_IMAGES.format(qq_window_name), WB_MODE) as fp1:
+                fp1.write(data)
+            with open(USER_OLD_IMAGES.format(qq_window_name), WB_MODE) as fp2:
+                fp2.write(data)
 
     def _compare_two_images(self) -> bool:
         self.compare = CompareImage(
-            f"./{self.qq_window_name}/new_pic.png",
-            f"./{self.qq_window_name}/old_pic.png",
+            USER_NEW_IMAGES.format(self.qq_window_name),
+            USER_OLD_IMAGES.format(self.qq_window_name),
             self.qq_window_name,
         )
         return self.compare.compare_two_images()
@@ -68,7 +75,7 @@ class ToRid:
         if qq_box_win.Exists(5):
             qq_box_win.SetActive()
             qq_box_win.MoveToCenter()
-            qq_box_sms.CaptureToImage(f"./{self.qq_window_name}/new_pic.png")
+            qq_box_sms.CaptureToImage(USER_NEW_IMAGES.format(self.qq_window_name))
 
     def _capture_and_match(self) -> str:
         """
@@ -117,7 +124,7 @@ class ToRid:
                     sleep(time)  # 五分钟后重试
                     continue
             for qq_window_name in self.qq_window_name_list:
-                self.qq_window_name = qq_window_name   # 更新self.qq_window_name为当前指向window_name
+                self.qq_window_name = qq_window_name   # 更新self.qq_window_name
                 self._capture_and_match()
 
             if name == TEST:

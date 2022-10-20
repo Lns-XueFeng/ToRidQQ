@@ -6,8 +6,11 @@ QQ_EXE_PATH = "F:\\QQ\\Bin\\QQScLauncher.exe"
 # 文件相关
 RB_MODE = "rb"
 WB_MODE = "wb"
-NEW_IMAGE_PATH = "./images/new_pic.png"
-OLD_IMAGE_PATH = "./images/old_pic.png"
+IMAGES_PATH = "./images"
+MODEL_IMAGE_PATH = "./images/model/new_pic.png"
+SET_USER_IMAGES = "./images/{}"
+USER_NEW_IMAGES = "./images/{}/new_pic.png"
+USER_OLD_IMAGES = "./images/{}/old_pic.png"
 
 # logging 日志需记录的常量
 LOG_LEVEL = "INFO"

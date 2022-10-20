@@ -12,8 +12,8 @@ class CompareImage:
         self.qq_window_name = qq_window_name
 
     def new_to_old(self) -> None:
-        with open(f"./{self.qq_window_name}/old_pic.png", WB_MODE) as old:
-            with open(f"./{self.qq_window_name}/new_pic.png", RB_MODE) as new:
+        with open(USER_OLD_IMAGES.format(self.qq_window_name), WB_MODE) as old:
+            with open(USER_NEW_IMAGES.format(self.qq_window_name), RB_MODE) as new:
                 new_image_bytes = new.read()
                 old.write(new_image_bytes)
 

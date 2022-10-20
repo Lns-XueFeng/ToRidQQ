@@ -10159,3 +10159,41 @@ INFO:root:图片不相似度：0.0%
 INFO:root:图片相似度大于99%->判定为信息重复：本次不发送邮件提醒
 INFO:root:
 
+INFO:root:2022-10-20 20:47
+WARNING:root:可能切换了QQ窗口：进行一次覆盖
+INFO:root:发现新消息：Send
+INFO:root:2022-10-20 20:50
+INFO:root:图片相似度：100.0%
+INFO:root:图片不相似度：0.0%
+INFO:root:图片相似度大于99%->判定为信息重复：本次不发送邮件提醒
+INFO:root:
+
+WARNING:root:可能切换了QQ窗口：进行一次覆盖
+INFO:root:发现新消息：Send
+INFO:root:邮件发送：Success
+INFO:root:
+
+INFO:root:2022-10-20 20:51
+INFO:root:图片相似度：59.7%
+INFO:root:图片不相似度：40.3%
+INFO:root:发现新消息：Send
+INFO:root:邮件发送：Success
+INFO:root:
+
+INFO:root:图片相似度：40.3%
+INFO:root:图片不相似度：59.7%
+INFO:root:发现新消息：Send
+INFO:root:邮件发送：Success
+INFO:root:
+
+INFO:root:2022-10-20 20:59
+WARNING:root:可能切换了QQ窗口：进行一次覆盖
+INFO:root:发现新消息：Send
+INFO:root:邮件发送：Success
+INFO:root:
+
+WARNING:root:可能切换了QQ窗口：进行一次覆盖
+INFO:root:发现新消息：Send
+INFO:root:邮件发送：Success
+INFO:root:
+
