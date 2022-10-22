@@ -9,9 +9,10 @@
 
 <h3>使用：</h3>
 <ol>
+    <li>克隆项目：git clone https://github.com/Lns-XueFeng/ToRidQQ.git</li>
+    <li>务必确定QQ邮箱已开启SMTP服务：打开config文件设置账号以及授权码</li>
     <li>打开QQ以及打开需监控的QQ窗口</li>
     <li>复制QQ窗口昵称以待后续传入参数</li>
-    <li>克隆项目：git clone https://github.com/Lns-XueFeng/ToRidQQ.git</li>
     <li>启动程序：python -m toridqq your_qq_window_name</li>
     <li>注：程序每轮询一次窗口便会激活一次窗口</li>
 </ol>

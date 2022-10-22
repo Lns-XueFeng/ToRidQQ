@@ -9,10 +9,11 @@ from .config import *
 from .email import Email
 from .internet import Internet
 from .compare import CompareImage
+from .tools import create_images, new_to_old
 
 
 class ToRid:
-    def __init__(self, name_list):
+    def __init__(self, name_list: list):
         if not os.path.exists(RELATIVE_RESULT):
             os.mkdir(RELATIVE_RESULT)
 
@@ -29,15 +30,7 @@ class ToRid:
             user_images = SET_USER_IMAGES.format(qq_window_name)
             if not os.path.exists(user_images):
                 os.mkdir(user_images)
-                self.create_images(qq_window_name)
-
-    def create_images(self, qq_window_name) -> None:
-        with open(MODEL_IMAGE_PATH, RB_MODE) as fp:
-            data = fp.read()
-            with open(USER_NEW_IMAGES.format(qq_window_name), WB_MODE) as fp1:
-                fp1.write(data)
-            with open(USER_OLD_IMAGES.format(qq_window_name), WB_MODE) as fp2:
-                fp2.write(data)
+                create_images(qq_window_name)
 
     def _compare_two_images(self) -> bool:
         self.compare = CompareImage(
@@ -46,9 +39,6 @@ class ToRid:
             self.qq_window_name,
         )
         return self.compare.compare_two_images()
-
-    def _new_to_old(self) -> None:
-        return self.compare.new_to_old()
 
     def _send_qq_email(self) -> bool:
         self.email = Email(self.qq_window_name)
@@ -88,7 +78,7 @@ class ToRid:
         if not match_result:
             logging.info(LOG_INFO_ONE)
             ret = self._send_qq_email()
-            self._new_to_old()  # new_image -> old_image
+            new_to_old(self.qq_window_name)  # new_image -> old_image
             if ret:
                 logging.info(LOG_INFO_TWO)
                 logging.info(LOG_INFO_TREE)

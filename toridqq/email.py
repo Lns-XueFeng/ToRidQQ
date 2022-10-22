@@ -6,7 +6,8 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 
 from .config import *
-from .key import MY_USER, MY_PASSWORD, MY_SENDER
+if not MY_USER and not MY_PASSWORD:
+    from .key import MY_USER, MY_PASSWORD, MY_SENDER
 
 
 class Email:

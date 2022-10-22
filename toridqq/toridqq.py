@@ -6,7 +6,7 @@ from .config import QQ_EXE_PATH
 
 
 class ToRidQQ(ToRid):
-    def __init__(self, name_list):
+    def __init__(self, name_list: list):
         super(ToRidQQ, self).__init__(name_list)
 
     def open_qq(self):
