@@ -31,7 +31,7 @@ if args.check:
 
 if args.register:
     computer = Internet()
-    http_status = computer.link_school_internet()
+    http_status = computer.link_school_internet(1)
     if http_status != 200:
         raise HTTPError
 

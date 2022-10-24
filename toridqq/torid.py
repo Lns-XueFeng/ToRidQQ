@@ -9,7 +9,8 @@ from .config import *
 from .email import Email
 from .internet import Internet
 from .compare import CompareImage
-from .tools import create_images, new_to_old
+from .utils import create_images, new_to_old
+from .utils import WindowNotFindError
 
 
 class ToRid:
@@ -17,6 +18,8 @@ class ToRid:
         if not os.path.exists(RELATIVE_RESULT):
             os.mkdir(RELATIVE_RESULT)
 
+        self.try_link_count = 0
+        self.class_name = self.__class__.__name__
         self.qq_window_name_list = name_list
         self.qq_window_name = None
         self.init_new_and_old()
@@ -48,8 +51,8 @@ class ToRid:
         self.internet = Internet()
         return self.internet.check_computer_internet()
 
-    def _link_school_internet(self) -> int or None:
-        return self.internet.link_school_internet()
+    def _link_school_internet(self, try_link_count) -> int or None:
+        return self.internet.link_school_internet(try_link_count)
 
     def _capture_qq_window(self) -> None:
         """
@@ -66,6 +69,9 @@ class ToRid:
             qq_box_win.SetActive()
             qq_box_win.MoveToCenter()
             qq_box_sms.CaptureToImage(USER_NEW_IMAGES.format(self.qq_window_name))
+        else:
+            logging.error(LOG_NOT_FIND_WINDOW.format(self.class_name))
+            raise WindowNotFindError
 
     def _capture_and_match(self) -> str:
         """
@@ -76,18 +82,11 @@ class ToRid:
         self._capture_qq_window()
         match_result = self._compare_two_images()
         if not match_result:
-            logging.info(LOG_INFO_ONE)
             ret = self._send_qq_email()
             new_to_old(self.qq_window_name)  # new_image -> old_image
             if ret:
-                logging.info(LOG_INFO_TWO)
-                logging.info(LOG_INFO_TREE)
                 return SEND_SUCCESS
-            logging.warning(LOG_WARN_TWO)
-            logging.info(LOG_INFO_TREE)
             return SEND_FAILED
-        logging.info(LOG_INFO_FOUR)
-        logging.info(LOG_INFO_TREE)
         return IMAGES_NOT_EQUAL
 
     def run_to_rid(self, time=300, name="") -> None:
@@ -105,16 +104,20 @@ class ToRid:
         )
         print(PRINT_START if name != TEST else TEST_BEGIN)
         while True:
-            logging.info(datetime.now().strftime(TIME_FORMAT))
+            logging.info(LOG_FORMAT)
+            current_time = datetime.now().strftime(TIME_FORMAT)
+            logging.info(LOG_RECORD_TIME.format(self.class_name, current_time))
             computer_internet = self._check_computer_internet()
             if not computer_internet:
-                school_link_status = self._link_school_internet()
+                school_link_status = self._link_school_internet(self.try_link_count)
                 if school_link_status != 200:
-                    logging.warning(LOG_WARN_TREE)
+                    self.try_link_count = school_link_status + 1
+                    logging.warning(LOG_FAIL_LINK.format(self.class_name, self.try_link_count))
                     sleep(time)  # 五分钟后重试
                     continue
             for qq_window_name in self.qq_window_name_list:
                 self.qq_window_name = qq_window_name   # 更新self.qq_window_name
+                logging.info(LOG_CURRENT_WINDOW.format(self.class_name, self.qq_window_name))
                 self._capture_and_match()
 
             if name == TEST:

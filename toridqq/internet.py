@@ -19,6 +19,7 @@ class Internet:
     故，需要另外加一个功能判断是否有网，如果无，则自动连接
     """
     def __init__(self):
+        self.default_try_count = 5
         self._url = "http://10.255.0.19/drcom/login?"
 
         self._header = {
@@ -39,7 +40,7 @@ class Internet:
             "v": "581",
         }
 
-    def link_school_internet(self) -> int or None:
+    def link_school_internet(self, try_link_count) -> int or None:
         """
         尝试协议登录校园网
         :return: 状态码 or None
@@ -52,14 +53,13 @@ class Internet:
                 params=self._params,
             ).status_code
         except HTTPError as error:
-            logging.error(f"{LOG_ERROR_ONE}{error}")
+            if try_link_count == self.default_try_count:
+                raise error
 
         # if res != 200:
         #     sleep(1)
         #     cls.link_school_internet()
-        #     logging.warning(LOG_WARN_FOUR)
 
-        logging.info(LOG_INGO_FIVE)
         return res
 
     @staticmethod

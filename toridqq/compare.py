@@ -3,7 +3,7 @@ import logging
 from PIL import Image
 
 from .config import *
-from .tools import new_to_old
+from .utils import new_to_old
 
 
 class CompareImage:
@@ -11,6 +11,8 @@ class CompareImage:
         self._image_one = Image.open(new_image_path)
         self._image_two = Image.open(old_image_path)
         self.qq_window_name = qq_window_name
+
+        self.class_name = self.__class__.__name__
 
     def _compare_two_pixel(self, x: int, y: int) -> bool:
         """
@@ -63,8 +65,8 @@ class CompareImage:
                 all_num += 1
         same_rate = round(right_num / all_num, 3)
         no_same_rate = round(false_num / all_num, 3)
-        logging.info(f"{SAME_RATE}{str(round(same_rate * 100, 1))}{PERCENT_SIGN}")
-        logging.info(f"{NO_SAME_RATE}{str(round(no_same_rate * 100, 1))}{PERCENT_SIGN}")
+        logging.info(f"<{self.class_name}：{SAME_RATE}{str(round(same_rate * 100, 1))}{PERCENT_SIGN}>")
+        logging.info(f"<{self.class_name}：{NO_SAME_RATE}{str(round(no_same_rate * 100, 1))}{PERCENT_SIGN}>")
 
         return same_rate
 
@@ -77,12 +79,14 @@ class CompareImage:
         """
         if not self._compare_images_size():   # 如果两张图片大小就不一样可认定图片不同
             # 造成大小不一样可能原因之一：换了获取信息的窗口, 所以需要覆盖一次图片
-            logging.warning(LOG_WARN_ONE)
+            logging.warning(LOG_MABEY_TOOGLE.format(self.class_name))
             new_to_old(self.qq_window_name)   # new_image -> old_image
             return False
 
         same_rate = self._count_two_images_rate()
         if same_rate > 0.99:  # 相似度大于99%认为图片相似
+            logging.info(LOG_NOT_SEND.format(self.class_name))
             return True
         else:
+            logging.info(LOG_SEND.format(self.class_name))
             return False

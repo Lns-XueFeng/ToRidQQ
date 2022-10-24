@@ -18,17 +18,17 @@ USER_OLD_IMAGES = "./images/{}/old_pic.png"
 
 # logging 日志需记录的常量
 LOG_LEVEL = "INFO"
+LOG_FORMAT = "\n"
 LOG_RESULT_PATH = "./result/results.log"
-LOG_ERROR_ONE = "连接校园网Error："
-LOG_WARN_ONE = "可能切换了QQ窗口：进行一次覆盖"
-LOG_WARN_TWO = "邮件发送：Fail"
-LOG_WARN_TREE = "尝试连接校园网失败..."
-LOG_WARN_FOUR = "Try again"
-LOG_INFO_ONE = "发现新消息：Send"
-LOG_INFO_TWO = "邮件发送：Success"
-LOG_INFO_TREE = "\n"
-LOG_INFO_FOUR = "图片相似度大于99%->判定为信息重复：本次不发送邮件提醒"
-LOG_INGO_FIVE = "成功连接校园网"
+LOG_RECORD_TIME = "<{}：{}>"
+LOG_CURRENT_WINDOW = "<{}：当前监控{}>"
+LOG_FAIL_LINK = "<{}：尝试连接校园网失败{}次>"
+LOG_NOT_FIND_WINDOW = "<{}：未找到应监控窗口>"
+LOG_SEND_SUCCESS = "<{}：新消息邮件发送成功>"
+LOG_MABEY_TOOGLE = "<{}：可能切换窗口, 进行覆盖>"
+LOG_NOT_SEND = "<{}：判定为无新消息(not send)>"
+LOG_SEND = "<{}：判定为新消息(send)>"
+LOG_EMAIL_ERROR = "<{}：邮件发送失败>"
 
 
 # -----------------------------torid.py-----------------------------
@@ -67,7 +67,7 @@ X_ATTACHMENT_ID, NEW_PIC_PNG = "X-Attachment-Id", "new_pic.png"
 
 # send_qq_email 函数
 SMTP_QQ_COM = "smtp.qq.com"
-SEND_EMAIL_ERROR = "发送QQ邮件Error："
+SEND_EMAIL_ERROR = "邮件发送失败"
 
 
 # -----------------------------compare.py-----------------------------

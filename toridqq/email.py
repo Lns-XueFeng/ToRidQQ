@@ -13,6 +13,7 @@ if not MY_USER and not MY_PASSWORD:
 class Email:
     def __init__(self, name: str):
         self.name = name
+        self.class_name = self.__class__.__name__
 
     def _generate_email(self) -> MIMEMultipart:
         """
@@ -55,7 +56,8 @@ class Email:
             server.login(MY_SENDER, MY_PASSWORD)
             server.sendmail(MY_SENDER, [MY_USER, ], main_msg.as_string())
             server.quit()
-        except Exception as result:
-            logging.error(f"{SEND_EMAIL_ERROR}{result}")
+        except Exception:
+            logging.error(LOG_EMAIL_ERROR.format(self.class_name))
             return False
+        logging.info(LOG_SEND_SUCCESS.format(self.class_name))
         return True

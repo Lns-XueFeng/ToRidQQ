@@ -1,4 +1,8 @@
-from config import *
+from .config import *
+
+
+class WindowNotFindError(Exception):
+    pass
 
 
 def create_images(qq_window_name: str) -> None:
