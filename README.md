@@ -10,14 +10,19 @@
 <h3>使用：</h3>
 <ol>
     <li>克隆项目：git clone https://github.com/Lns-XueFeng/ToRidQQ.git</li>
-    <li>务必确定QQ邮箱已开启SMTP服务：打开config文件设置账号以及授权码</li>
-    <li>打开QQ以及打开需监控的QQ窗口</li>
-    <li>复制QQ窗口昵称以待后续传入参数</li>
-    <li>启动程序：python -m toridqq your_qq_window_name</li>
-    <li>注：程序每轮询一次窗口便会激活一次窗口</li>
+    <li>进入项目目录，安装项目依赖：pip install -r requirements.txt</li>
+    <li>务必确定QQ邮箱已开启SMTP服务：找到config文件设置账号以及授权码</li>
+    <li>登录QQ以及打开需监控的QQ窗口，复制QQ窗口昵称以待后续传入参数</li>
+    <li>启动程序：python -m toridqq your_qq_window_name1 your_qq_window_name2</li>
 </ol>
-<h4>注意：目前支持监控多个窗口, 但别使用QQ自动将窗口合在一起的模式，</h4>
-<h4>需单独分开每个聊天窗口，单独放置后即可，将各个窗口最小化，需要时程序会自动激活窗口</h4>
+
+<h3>注意：</h3>
+<ol>
+    <li>目前支持监控多个窗口, 但别使用QQ自动将窗口合在一起的模式</li>
+    <li>需单独分开每个聊天窗口，单独放置后即可（重叠覆盖放置）</li>
+    <li>最后，将各个QQ窗口最小化，需要时程序会自动激活窗口</li>
+    <li>键盘左上角esc按键即为退出程序按键，按下即可退出程序</li>
+</ol>
 
 <h3>原因：</h3>
 <ol>
@@ -54,7 +59,7 @@
 </ul>
 
 <h3>检查计算机网络情况：</h3>
-<p>在程序开始运行之前检查计算机网络情况</p>
+<p>在程序开始运行之前检查计算机网络情况（默认便会检查）</p>
 <ul>
     <li>python -m toridqq -c your_qq_window_name</li>
     <li>python -m toridqq --check your_qq_window_name</li>

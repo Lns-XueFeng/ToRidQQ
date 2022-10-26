@@ -1,8 +1,30 @@
+import sys
+
 from .config import *
+
+
+class ShowSituation:
+    def __init__(self, start=None, end=None):
+        self.start = start
+        self.end = end
+
+    def __enter__(self):
+        if self.start:
+            print(self.start)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.end:
+            print(self.end)
 
 
 class WindowNotFindError(Exception):
     pass
+
+
+def exit_program(exit_warn):
+    print(exit_warn)
+    sys.exit(0)
 
 
 def create_images(qq_window_name: str) -> None:

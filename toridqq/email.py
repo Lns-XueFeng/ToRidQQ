@@ -7,6 +7,7 @@ from email.mime.multipart import MIMEMultipart
 
 from .config import *
 if not MY_USER and not MY_PASSWORD:
+    # key文件未传到github, 用户账号密码在config设置
     from .key import MY_USER, MY_PASSWORD, MY_SENDER
 
 
@@ -56,8 +57,8 @@ class Email:
             server.login(MY_SENDER, MY_PASSWORD)
             server.sendmail(MY_SENDER, [MY_USER, ], main_msg.as_string())
             server.quit()
-        except Exception:
-            logging.error(LOG_EMAIL_ERROR.format(self.class_name))
+        except Exception as result:
+            logging.error(LOG_EMAIL_ERROR.format(self.class_name, result))
             return False
         logging.info(LOG_SEND_SUCCESS.format(self.class_name))
         return True

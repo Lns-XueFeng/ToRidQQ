@@ -3,14 +3,15 @@ import logging
 from time import sleep
 from datetime import datetime
 
+import keyboard
 import uiautomation
 
 from .config import *
 from .email import Email
 from .internet import Internet
 from .compare import CompareImage
-from .utils import create_images, new_to_old
 from .utils import WindowNotFindError
+from .utils import create_images, new_to_old, exit_program
 
 
 class ToRid:
@@ -47,11 +48,8 @@ class ToRid:
         self.email = Email(self.qq_window_name)
         return self.email.send_qq_email()
 
-    def _check_computer_internet(self) -> bool:
-        self.internet = Internet()
-        return self.internet.check_computer_internet()
-
     def _link_school_internet(self, try_link_count) -> int or None:
+        self.internet = Internet()
         return self.internet.link_school_internet(try_link_count)
 
     def _capture_qq_window(self) -> None:
@@ -89,13 +87,16 @@ class ToRid:
             return SEND_FAILED
         return IMAGES_NOT_EQUAL
 
-    def run_to_rid(self, time=300, name="") -> None:
+    def run_to_rid(self, time=300, auto_register=False,  name="") -> None:
         """
         主要逻辑函数，对指定窗口进行轮询监控并进行一些意外操作
         :param time: 监控时间
+        :param auto_register: 控制是否开启校园网自动登录
         :param name: QQ窗口名字
         :return:
         """
+        exit_warn = PRINT_END if name != TEST else TEST_FINISHED
+        keyboard.add_hotkey("esc", exit_program, args=(exit_warn,))
         logging.basicConfig(
             level=LOG_LEVEL,
             filemode=A_MODE,
@@ -107,20 +108,16 @@ class ToRid:
             logging.info(LOG_FORMAT)
             current_time = datetime.now().strftime(TIME_FORMAT)
             logging.info(LOG_RECORD_TIME.format(self.class_name, current_time))
-            computer_internet = self._check_computer_internet()
-            if not computer_internet:
-                school_link_status = self._link_school_internet(self.try_link_count)
-                if school_link_status != 200:
-                    self.try_link_count = school_link_status + 1
-                    logging.warning(LOG_FAIL_LINK.format(self.class_name, self.try_link_count))
-                    sleep(time)  # 五分钟后重试
-                    continue
+            school_link_status = self._link_school_internet(self.try_link_count)
+            if auto_register and school_link_status != 200:
+                self.try_link_count = school_link_status + 1
+                logging.warning(LOG_FAIL_LINK.format(self.class_name, self.try_link_count))
+                sleep(time)
+                continue
             for qq_window_name in self.qq_window_name_list:
                 self.qq_window_name = qq_window_name   # 更新self.qq_window_name
                 logging.info(LOG_CURRENT_WINDOW.format(self.class_name, self.qq_window_name))
                 self._capture_and_match()
-
             if name == TEST:
                 break
-            sleep(time)  # 一分钟查看一次
-        print(PRINT_END if name != TEST else TEST_FINISHED)
+            sleep(time)

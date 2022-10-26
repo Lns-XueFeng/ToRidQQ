@@ -28,7 +28,7 @@ LOG_SEND_SUCCESS = "<{}：新消息邮件发送成功>"
 LOG_MABEY_TOOGLE = "<{}：可能切换窗口, 进行覆盖>"
 LOG_NOT_SEND = "<{}：判定为无新消息(not send)>"
 LOG_SEND = "<{}：判定为新消息(send)>"
-LOG_EMAIL_ERROR = "<{}：邮件发送失败>"
+LOG_EMAIL_ERROR = "<{}：邮件发送失败, {}>"
 
 
 # -----------------------------torid.py-----------------------------
@@ -46,8 +46,8 @@ IMAGES_NOT_EQUAL = "images not equal"
 # run_to_rid
 A_MODE = "a"
 UTF_8 = "utf-8"
-PRINT_START = "程序开始监控QQ聊天窗口"
-PRINT_END = "程序结束监控QQ意外退出"
+PRINT_START = "程序开始监控QQ窗口"
+PRINT_END = "程序结束监控正常退出"
 TIME_FORMAT = "%Y-%m-%d %H:%M"
 QQ_WINDOW_NAME = "团结的火药桶"
 TEST = "test"
