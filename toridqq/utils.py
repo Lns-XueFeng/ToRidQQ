@@ -22,6 +22,10 @@ class WindowNotFindError(Exception):
     pass
 
 
+class NoRequestResponse(Exception):
+    pass
+
+
 def exit_program(exit_warn):
     print(exit_warn)
     sys.exit(0)

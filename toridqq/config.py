@@ -55,6 +55,22 @@ TEST_BEGIN = "test begin"
 TEST_FINISHED = "test finished"
 
 
+# -----------------------------toridkj.py-----------------------------
+URL = "https://user.qzone.qq.com/proxy/domain/ic2.qzone.qq.com/cgi-bin/feeds/feeds3_html_more?" \
+    "uin=1477792904&scope=0&view=1&daylist=&uinlist=&gid=&flag=1&filter=all&applist=all" \
+    "&refresh=0&aisortEndTime=0&aisortOffset=0&getAisort=0&aisortBeginTime=0" \
+    "&pagenum=1&externparam=&firstGetGroup=0&icServerTime=0&mixnocache=0&scene=0&begintime=0" \
+    "&count=10&dayspac=0&sidomain=qzonestyle.gtimg.cn&useutf8=1&outputhtmlfeed=1&rd={}" \
+    "&usertime={}&windowId={}&getob=1&g_tk=1565550388&g_tk=1565550388"
+
+HEADER = {
+    "accept-encoding": "gzip, deflate, br",
+    "cookie": "iip=0; pgv_pvid=6430652910; LW_uid=s1z6E5B8J6s4K4Y1c6M5Y418S8; eas_sid=q1a6451866l4x4C1d6a5K6q6A2; RK=h/FYX5lwSr; ptcz=d295ed152e18c4b960133810a016725162fff82e6bfc425131e4c9cd6c4a4dcc; uin_cookie=o1477792904; ied_qq=o1477792904; tvfe_boss_uuid=960620ff139b1538; o_cookie=1477792904; pac_uid=1_1477792904; LW_sid=S1r6a6F3i3J3n7k2Y1k1U0j1C6; logTrackKey=dd2f9804e349413ab75fbca26ba3913b; _clck=3898611844|1|f5x|0; qz_screen=1920x1080; QZ_FE_WEBP_SUPPORT=1; cpu_performance_v8=0; ptui_loginuin=1477792904; pgv_info=ssid=s9372216512; vversion_name=8.2.95; video_omgid=2f8042dba619443f; _qpsvr_localtk=0.019471130152875604; uin=o1477792904; skey=@ksfuEHamL; p_uin=o1477792904; pt4_token=HyptD0NrljakmG7Yn22xsx6gkAmxWy3MTTlCoCtDHUk_; p_skey=CLnfbJauaCFwcx0wxPZQvpErS*0hwGlfNPvkGScsABA_; Loading=Yes; 1477792904_todaycount=0; 1477792904_totalcount=5659",
+    "referer": "https://user.qzone.qq.com/1477792904",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 Edg/107.0.1418.24"
+}
+
+
 # -----------------------------email.py-----------------------------
 # _generate_email 函数
 MY_NAME = "Lns-XueFeng"
