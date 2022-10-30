@@ -6,41 +6,8 @@ from urllib import parse
 import requests
 from requests import HTTPError
 
-from toridqq.config import *
-from utils import NoRequestResponse, NoKeyValueError
-
-"""
-getACSRFToken: function(url) {
-    url = QZFL.util.URI(url);   ->检查url规范的, 可去除
-    
-    var skey;
-    if (url) {
-        if (url.host && url.host.indexOf("qzone.qq.com") > 0) {
-            try {
-                skey = QZONE.FP._t.QZFL.cookie.get("p_skey");
-            } catch (err) {
-                skey = QZFL.cookie.get("p_skey");
-            }
-        } else {
-            if (url.host && url.host.indexOf("qq.com") > 0) {
-                skey = QZFL.cookie.get("skey");
-            }
-        }
-    }
-    if (!skey) {
-        skey = QZFL.cookie.get("p_skey") || (QZFL.cookie.get("skey") || (QZFL.cookie.get("rv2") || ""));
-    }
-        -> 上面一大段代码其实就是在cookie里: 如果p_skey有就用这个, 否则skey, 再否则就rv2
-    
-    var hash = 5381;
-    for (var i = 0, len = skey.length; i < len; ++i) {
-        hash += (hash << 5) + skey.charCodeAt(i);
-    }
-    return hash & 2147483647;
-    }
-    
-    最后就是用python来实现一下这个函数即可, 因此也可以解释了为什么g_tk是一天变一次, 因为可能qq空间的cookie失效时间是一天.
-"""
+from .config import *
+from .utils import NoRequestResponse, NoKeyValueError
 
 
 class ToRidKJ:
@@ -48,7 +15,6 @@ class ToRidKJ:
     ToRidKJ即为：摆脱QQ空间
     将QQ空间中新出的动态（仅自己想了解的好友, 推送至手机）
     """
-
     def __init__(self):
         self.cookie = HEADER["cookie"]
         self.g_tk = self.decrypt_g_tk()
@@ -83,6 +49,10 @@ class ToRidKJ:
         return hash_value & 2147483647
 
     def to_dict(self):
+        """
+        将cookie字符串转为字典形式
+        :return:
+        """
         new_cookie = "{" + self.cookie.replace("=", ":").replace(";", ",") + "}"
         return new_cookie
 
@@ -99,6 +69,11 @@ class ToRidKJ:
         return decoded_data
 
     def request(self):
+        """
+        请求拿到qq空间动态信息
+        但是其中包含乱码数据
+        :return:
+        """
         res = requests.get(url=self.url, headers=HEADER)
         status_code = res.status_code
         if status_code == 200:
@@ -108,7 +83,46 @@ class ToRidKJ:
             raise HTTPError
 
     def parse_text(self):
+        """
+        对拿到的qq空间动态信息
+        及其乱码信息进行解析整理
+        :return:
+        """
         if self.data_text:
             pass
         if not self.data_text:
             raise NoRequestResponse
+
+
+"""
+getACSRFToken: function(url) {
+    url = QZFL.util.URI(url);   ->检查url规范的, 可去除
+
+    var skey;
+    if (url) {
+        if (url.host && url.host.indexOf("qzone.qq.com") > 0) {
+            try {
+                skey = QZONE.FP._t.QZFL.cookie.get("p_skey");
+            } catch (err) {
+                skey = QZFL.cookie.get("p_skey");
+            }
+        } else {
+            if (url.host && url.host.indexOf("qq.com") > 0) {
+                skey = QZFL.cookie.get("skey");
+            }
+        }
+    }
+    if (!skey) {
+        skey = QZFL.cookie.get("p_skey") || (QZFL.cookie.get("skey") || (QZFL.cookie.get("rv2") || ""));
+    }
+        -> 上面一大段代码其实就是在cookie里: 如果p_skey有就用这个, 否则skey, 再否则就rv2
+
+    var hash = 5381;
+    for (var i = 0, len = skey.length; i < len; ++i) {
+        hash += (hash << 5) + skey.charCodeAt(i);
+    }
+    return hash & 2147483647;
+    }
+
+    最后就是用python来实现一下这个函数即可, 因此也可以解释了为什么g_tk是一天变一次, 因为可能qq空间的cookie失效时间是一天.
+"""

@@ -31,7 +31,7 @@ LOG_SEND = "<{}：判定为新消息(send)>"
 LOG_EMAIL_ERROR = "<{}：邮件发送失败, {}>"
 
 
-# -----------------------------torid.py-----------------------------
+# -----------------------------toridqq.py-----------------------------
 # __init__
 RELATIVE_IMAGES = "./images"
 RELATIVE_RESULT = "./result"

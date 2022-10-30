@@ -52,3 +52,20 @@ INFO:root:图片不相似度：0.0%
 INFO:root:图片相似度大于99%->判定为信息重复：本次不发送邮件提醒
 INFO:root:
 
+INFO:root:
+
+INFO:root:<ToRidQQ：2022-10-30 22:56>
+INFO:root:<ToRidQQ：当前监控团结的火药桶>
+INFO:root:
+
+INFO:root:<ToRidQQ：2022-10-30 22:57>
+INFO:root:<ToRidQQ：当前监控团结的火药桶>
+INFO:root:
+
+INFO:root:<ToRidQQ：2022-10-30 22:57>
+INFO:root:<ToRidQQ：当前监控团结的火药桶>
+INFO:root:<CompareImage：图片相似度：99.5%>
+INFO:root:<CompareImage：图片不相似度：0.5%>
+INFO:root:<CompareImage：判定为无新消息(not send)>
+INFO:root:<ToRidQQ：当前监控弹药20级6班>
+WARNING:root:<CompareImage：可能切换窗口, 进行覆盖>

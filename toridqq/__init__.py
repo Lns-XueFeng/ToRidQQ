@@ -1,13 +1,15 @@
-from .toridqq import ToRidQQ
 from .torid import ToRid
+from .toridqq import ToRidQQ
+from .toridkj import ToRidKJ
 from .compare import CompareImage
 from .internet import Internet
 from .email import Email
 
 
 __all__ = [
-    ToRidQQ,
     ToRid,
+    ToRidQQ,
+    ToRidKJ,
     CompareImage,
     Internet,
     Email,
