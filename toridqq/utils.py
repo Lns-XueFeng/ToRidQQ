@@ -26,6 +26,10 @@ class NoRequestResponse(Exception):
     pass
 
 
+class NoKeyValueError(ValueError):
+    pass
+
+
 def exit_program(exit_warn):
     print(exit_warn)
     sys.exit(0)
