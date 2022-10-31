@@ -1,4 +1,4 @@
-from toridqq import ToRid
+from toridqq import ToRidQQ
 
 
 """
@@ -31,5 +31,5 @@ from toridqq import ToRid
 
 
 if __name__ == "__main__":
-    to_rid_qq = ToRid(["团结的火药桶", "弹药20级6班"])
+    to_rid_qq = ToRidQQ(["团结的火药桶", "弹药20级6班"])
     to_rid_qq.run_to_rid()

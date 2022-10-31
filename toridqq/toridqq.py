@@ -44,6 +44,10 @@ class ToRidQQ:
         )
         return self.compare.compare_two_images()
 
+    def _new_to_old(self):
+        """new_image -> old_image"""
+        return new_to_old(self.qq_window_name)
+
     def _send_qq_email(self) -> bool:
         self.email = Email(self.qq_window_name)
         return self.email.send_qq_email()
@@ -81,7 +85,7 @@ class ToRidQQ:
         match_result = self._compare_two_images()
         if not match_result:
             ret = self._send_qq_email()
-            new_to_old(self.qq_window_name)  # new_image -> old_image
+            self._new_to_old()
             if ret:
                 return SEND_SUCCESS
             return SEND_FAILED
