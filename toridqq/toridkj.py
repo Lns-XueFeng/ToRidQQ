@@ -28,7 +28,7 @@ class ToRidKJ:
         self.parsed_text = None
         self.key = None
 
-    def decrypt_g_tk(self):
+    def decrypt_g_tk(self) -> int:
         """
         rid = random.random()
         time_stamp = time.time()
@@ -48,7 +48,7 @@ class ToRidKJ:
 
         return hash_value & 2147483647
 
-    def to_dict(self):
+    def to_dict(self) -> str:
         """
         将cookie字符串转为字典形式
         :return:
@@ -56,7 +56,7 @@ class ToRidKJ:
         new_cookie = "{" + self.cookie.replace("=", ":").replace(";", ",") + "}"
         return new_cookie
 
-    def get_decode_data(self):
+    def get_decode_data(self) -> str:
         """
         请求返回的数据里面有很多乱码的数据
         待再拿出来的时候进行解码得到正常的数据
@@ -68,7 +68,7 @@ class ToRidKJ:
         decoded_data = parse.unquote(rpl_result)
         return decoded_data
 
-    def request(self):
+    def request(self) -> str:
         """
         请求拿到qq空间动态信息
         但是其中包含乱码数据
@@ -81,6 +81,7 @@ class ToRidKJ:
             self.data_text = text_result   # 英文和数字均乱码
         if status_code != 200:
             raise HTTPError
+        return self.data_text
 
     def parse_text(self):
         """
@@ -92,6 +93,9 @@ class ToRidKJ:
             pass
         if not self.data_text:
             raise NoRequestResponse
+
+    def run_to_rid(self):
+        pass
 
 
 """
