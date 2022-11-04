@@ -2,6 +2,7 @@ import re
 import random
 import time
 from urllib import parse
+from threading import Thread
 
 import requests
 from requests import HTTPError
@@ -10,12 +11,13 @@ from .config import *
 from .utils import NoRequestResponse, NoKeyValueError
 
 
-class ToRidKJ:
+class ToRidKJ(Thread):
     """
     ToRidKJ即为：摆脱QQ空间
     将QQ空间中新出的动态（仅自己想了解的好友, 推送至手机）
     """
     def __init__(self):
+        super(ToRidKJ, self).__init__(daemon=True)
         self.cookie = HEADER["cookie"]
         self.g_tk = self.decrypt_g_tk()
         self.rid = random.random()
@@ -96,6 +98,13 @@ class ToRidKJ:
 
     def run_to_rid(self):
         pass
+
+    def run(self):
+        """
+        多线程形式调用起ToRidKJ
+        :return:
+        """
+        self.run_to_rid()
 
 
 """
