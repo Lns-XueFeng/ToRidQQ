@@ -16,7 +16,7 @@ from .utils import create_images, new_to_old, exit_program
 
 
 class ToRidQQ(Thread):
-    def __init__(self, name_list: list, time: int, auto_register: bool):
+    def __init__(self, name_list: list, time=300, auto_register=False):
         super(ToRidQQ, self).__init__()
         if not os.path.exists(RELATIVE_RESULT):
             os.mkdir(RELATIVE_RESULT)
@@ -105,32 +105,32 @@ class ToRidQQ(Thread):
         :param name: QQ窗口名字
         :return:
         """
-        # exit_warn = PRINT_END if name != TEST else TEST_FINISHED
-        # keyboard.add_hotkey("esc", exit_program, args=(exit_warn,))
+        exit_warn = PRINT_END if name != TEST else TEST_FINISHED
+        keyboard.add_hotkey("esc", exit_program, args=(exit_warn,))
         logging.basicConfig(
             level=LOG_LEVEL,
             filemode=A_MODE,
             encoding=UTF_8,
             filename=LOG_RESULT_PATH,
         )
-        # print(PRINT_START if name != TEST else TEST_BEGIN)
-        # while True:
-        logging.info(LOG_FORMAT)
-        current_time = datetime.now().strftime(TIME_FORMAT)
-        logging.info(LOG_RECORD_TIME.format(self.class_name, current_time))
-        # school_link_status = self._link_school_internet(self.try_link_count)
-        # if self.auto_register and school_link_status != 200:
-        #     self.try_link_count = school_link_status + 1
-        #     logging.warning(LOG_FAIL_LINK.format(self.class_name, self.try_link_count))
-        #     sleep(self.time)
-        #     continue
-        for qq_window_name in self.qq_window_name_list:
-            self.qq_window_name = qq_window_name   # 更新self.qq_window_name
-            logging.info(LOG_CURRENT_WINDOW.format(self.class_name, self.qq_window_name))
-            self._capture_and_match()
-        # if name == TEST:
-        #     break
-            # sleep(self.time)
+        print(PRINT_START if name != TEST else TEST_BEGIN)
+        while True:
+            logging.info(LOG_FORMAT)
+            current_time = datetime.now().strftime(TIME_FORMAT)
+            logging.info(LOG_RECORD_TIME.format(self.class_name, current_time))
+            school_link_status = self._link_school_internet(self.try_link_count)
+            if self.auto_register and school_link_status != 200:
+                self.try_link_count = school_link_status + 1
+                logging.warning(LOG_FAIL_LINK.format(self.class_name, self.try_link_count))
+                sleep(self.time)
+                continue
+            for qq_window_name in self.qq_window_name_list:
+                self.qq_window_name = qq_window_name   # 更新self.qq_window_name
+                logging.info(LOG_CURRENT_WINDOW.format(self.class_name, self.qq_window_name))
+                self._capture_and_match()
+            if name == TEST:
+                break
+            sleep(self.time)
 
     def run(self) -> None:
         """

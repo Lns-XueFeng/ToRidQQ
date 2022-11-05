@@ -16,9 +16,7 @@ parser.add_argument("-c", "--check", action="store_true", default=True, help="�
 parser.add_argument("-r", "--register", action="store_true", help="是否校园网自动协议登录(校园网才可用,修改源代码进行自定义)")
 args = parser.parse_args(sys.argv[1:])
 
-
 auto_register = False
-
 
 # if args.open:
 #     to_rid_qq.open_qq()
@@ -37,7 +35,5 @@ if auto_register:
     if http_status != 200:
         raise HTTPError
 
-
 to_rid = ToRid(args.name_list, args.time, auto_register)
-to_rid.show_qq_window()
-to_rid.run_flask()
+to_rid.thread_run_torid()
