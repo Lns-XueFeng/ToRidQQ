@@ -100,8 +100,6 @@ class ToRidQQ(Thread):
     def run_to_rid(self, name="") -> None:
         """
         主要逻辑函数，对指定窗口进行轮询监控并进行一些意外操作
-        :param time: 监控时间
-        :param auto_register: 控制是否开启校园网自动登录
         :param name: QQ窗口名字
         :return:
         """

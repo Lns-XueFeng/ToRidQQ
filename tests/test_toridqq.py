@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 from toridqq import ToRidQQ
 
 
-class TestEngine(unittest.TestCase):
+class TestToRidQQ(unittest.TestCase):
     @unittest.skip
     def test_capture_qq_window(self):
         to_rid = ToRidQQ(["团结的火药桶"])
