@@ -100,10 +100,7 @@ class ToRidKJ(Thread):
         pass
 
     def run(self):
-        """
-        多线程形式调用起ToRidKJ
-        :return:
-        """
+        """多线程调用ToRidKJ"""
         self.run_to_rid()
 
 

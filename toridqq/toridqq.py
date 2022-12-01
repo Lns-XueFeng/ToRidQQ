@@ -13,6 +13,7 @@ from .internet import Internet
 from .compare import CompareImage
 from .utils import WindowNotFindError
 from .utils import create_images, new_to_old, exit_program
+from .genhtml import GenerateHtml
 
 
 class ToRidQQ(Thread):
@@ -40,6 +41,10 @@ class ToRidQQ(Thread):
                 os.mkdir(user_images)
                 create_images(qq_window_name)
 
+    def _new_to_old(self):
+        """new_image -> old_image"""
+        return new_to_old(self.qq_window_name)
+
     def _compare_two_images(self) -> bool:
         self.compare = CompareImage(
             USER_NEW_IMAGES.format(self.qq_window_name),
@@ -47,10 +52,6 @@ class ToRidQQ(Thread):
             self.qq_window_name,
         )
         return self.compare.compare_two_images()
-
-    def _new_to_old(self):
-        """new_image -> old_image"""
-        return new_to_old(self.qq_window_name)
 
     def _send_qq_email(self) -> bool:
         self.email = Email(self.qq_window_name)
@@ -126,13 +127,13 @@ class ToRidQQ(Thread):
                 self.qq_window_name = qq_window_name   # 更新self.qq_window_name
                 logging.info(LOG_CURRENT_WINDOW.format(self.class_name, self.qq_window_name))
                 self._capture_and_match()
+            # 生成html文件
+            generate = GenerateHtml()
+            generate.gen_html_file()
             if name == TEST:
                 break
             sleep(self.time)
 
     def run(self) -> None:
-        """
-        多线程形式调用起ToRidQQ
-        :return:
-        """
+        """多线程调用ToRidQQ"""
         self.run_to_rid()
