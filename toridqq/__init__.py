@@ -4,6 +4,7 @@ from .toridkj import ToRidKJ
 from .compare import CompareImage
 from .internet import Internet
 from .email import Email
+from .genhtml import GenerateHtml
 
 
 __all__ = [
@@ -13,4 +14,5 @@ __all__ = [
     CompareImage,
     Internet,
     Email,
+    GenerateHtml,
 ]
