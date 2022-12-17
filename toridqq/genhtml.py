@@ -1,12 +1,12 @@
 import os
+import string
 
 
 class GenerateHtml:
     def __init__(self):
         self.dir_of_list = os.listdir("./images")
         self.img_html = None
-        self.style = "<style>html body{margin: 0 auto;text-align:center;color:pink;background:lightyellow;}" \
-                     "img{margin:5px;border:purple 4px solid;}h1{color: black;}</style>"
+        self.html_string = None
 
     def get_img_html(self):
         img_html = ""
@@ -18,12 +18,16 @@ class GenerateHtml:
         return img_html
 
     def get_html(self):
-        return f"<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'>" \
-               f"<title>ToRidQQ</title>{self.style}</head><body>" \
-               f"<h1>ToRidQQ历史消息展示页</h1><div>{self.img_html}</div></body></html>"
+        with open("./toridqq/html/template_html.html", 'r', encoding="utf-8") as fp1:
+            template_html = fp1.read()
+
+        data_dict = {"img_html": self.img_html}
+        template = string.Template(template_html)
+        self.html_string = template.substitute(data_dict)
+        return self.html_string
 
     def gen_html_file(self):
         self.img_html = self.get_img_html()
         if self.img_html:
-            with open("./show_img.html", "w", encoding="utf-8") as fp:
-                fp.write(self.get_html())
+            with open("./show_img.html", "w", encoding="utf-8") as fp2:
+                fp2.write(self.get_html())

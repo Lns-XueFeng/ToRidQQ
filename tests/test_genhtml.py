@@ -17,6 +17,6 @@ class TestGenHtml(TestCase):
         gen_html = GenerateHtml()
         gen_html.gen_html_file()
         exist = False
-        if os.path.exists("./show_img.html"):
+        if os.path.exists("./template_html.html"):
             exist = True
         self.assertTrue(exist)
