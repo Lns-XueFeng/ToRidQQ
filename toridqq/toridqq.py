@@ -2,7 +2,7 @@ import os.path
 import logging
 from time import sleep
 from datetime import datetime
-from threading import Thread
+from multiprocessing import Process
 
 import keyboard
 import uiautomation
@@ -16,7 +16,7 @@ from .utils import create_images, new_to_old, exit_program
 from .genhtml import GenerateHtml
 
 
-class ToRidQQ(Thread):
+class ToRidQQ(Process):
     def __init__(self, name_list: list, time=300, auto_register=False):
         super(ToRidQQ, self).__init__()
         if not os.path.exists(RELATIVE_RESULT):
@@ -135,5 +135,5 @@ class ToRidQQ(Thread):
             sleep(self.time)
 
     def run(self) -> None:
-        """多线程调用ToRidQQ"""
+        """多进程调用ToRidQQ"""
         self.run_to_rid()

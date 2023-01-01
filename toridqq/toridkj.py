@@ -2,7 +2,7 @@ import re
 import random
 import time
 from urllib import parse
-from threading import Thread
+from multiprocessing import Process
 
 import requests
 from requests import HTTPError
@@ -11,7 +11,7 @@ from .config import *
 from .utils import NoRequestResponse, NoKeyValueError
 
 
-class ToRidKJ(Thread):
+class ToRidKJ(Process):
     """
     ToRidKJ即为：摆脱QQ空间
     将QQ空间中新出的动态（仅自己想了解的好友, 推送至手机）
@@ -39,7 +39,7 @@ class ToRidKJ(Thread):
         :return:
         """
         key_list = re.findall("p_skey=(.*?);", self.cookie) or re.findall("skey=(.*?);", self.cookie) \
-                   or re.findall("rv2=(.*?);", self.cookie)
+            or re.findall("rv2=(.*?);", self.cookie)
         self.key = key_list
 
         hash_value = 5381
