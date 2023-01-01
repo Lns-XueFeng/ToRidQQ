@@ -24,7 +24,7 @@ from toridqq import ToRidQQ
         可选参数  是否需要监控多个QQ消息窗口  
     支持监控多个窗口   已完成
     
-    本程序核心未ToRidQQ, 为了摆脱QQ, 那么程序的功能便可围绕着这个主题进行扩展开发
+    本程序核心为ToRidQQ, 为了摆脱QQ, 那么程序的功能便可围绕着这个主题进行扩展开发
         下一个可考虑的点是 “QQ空间”  开始扩展的话代码结构即可再次改变,
         ToRid 修改为 ToRidQQ, 现在的ToRidQQ可变为ToRid, 在这个类里面去调用不同的ToRid... 
         
