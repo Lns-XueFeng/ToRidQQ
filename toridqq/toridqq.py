@@ -66,7 +66,6 @@ class ToRidQQ(Process):
         调用uiautomation对指定qq窗口进行捕捉截图
         :return:
         """
-        # uiautomation使用多线程需要先初始化一些东西
         with uiautomation.UIAutomationInitializerInThread():
             qq_box_win = uiautomation.WindowControl(
                 searchDepth=1,

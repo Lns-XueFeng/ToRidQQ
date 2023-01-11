@@ -49,8 +49,8 @@ class CompareImage:
 
     def _count_two_images_rate(self) -> float:
         """
-        将俩图片进行比较
-        :return: same_rate 图片相似度
+        将俩图片的所有像素进行比较
+        :return: 返回图片相似度
         """
         left = 80   # 坐标起始位置
         right_num = 0   # 记录相同像素点个数
