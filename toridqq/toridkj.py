@@ -18,19 +18,20 @@ class ToRidKJ(Process):
     """
     def __init__(self):
         super(ToRidKJ, self).__init__(daemon=True)
-        self.cookie = HEADER["cookie"]
-        self.g_tk = self.decrypt_g_tk()
-        self.rid = random.random()
-        self.time_stamp = time.time()
-        self.window_ld = random.random()
-        self.url = URL.format(
-            self.rid, self.time_stamp, self.window_ld, self.g_tk, self.g_tk)
-        self.header = HEADER
-        self.data_text = None
-        self.parsed_text = None
-        self.key = None
+        self._cookie = HEADER["cookie"]
+        self._g_tk = self._decrypt_g_tk()
+        self._rid = random.random()
+        self._time_stamp = time.time()
+        self._window_ld = random.random()
 
-    def decrypt_g_tk(self) -> int:
+        self._url = URL.format(
+            self._rid, self._time_stamp, self._window_ld, self._g_tk, self._g_tk)
+        self._header = HEADER
+        self._data_text = None
+        self._parsed_text = None
+        self._key = None
+
+    def _decrypt_g_tk(self) -> int:
         """
         rid = random.random()
         time_stamp = time.time()
@@ -38,8 +39,8 @@ class ToRidKJ(Process):
         g_tk是最后一个加密参数, 与cookie相关
         :return:
         """
-        key_list = re.findall("p_skey=(.*?);", self.cookie) or re.findall("skey=(.*?);", self.cookie) \
-            or re.findall("rv2=(.*?);", self.cookie)
+        key_list = re.findall("p_skey=(.*?);", self._cookie) or re.findall("skey=(.*?);", self._cookie) \
+            or re.findall("rv2=(.*?);", self._cookie)
         self.key = key_list
 
         hash_value = 5381
@@ -50,15 +51,15 @@ class ToRidKJ(Process):
 
         return hash_value & 2147483647
 
-    def to_dict(self) -> str:
+    def _to_dict(self) -> str:
         """
         将cookie字符串转为字典形式
         :return:
         """
-        new_cookie = "{" + self.cookie.replace("=", ":").replace(";", ",") + "}"
+        new_cookie = "{" + self._cookie.replace("=", ":").replace(";", ",") + "}"
         return new_cookie
 
-    def get_decode_data(self) -> str:
+    def _get_decode_data(self) -> str:
         """
         请求返回的数据里面有很多乱码的数据
         待再拿出来的时候进行解码得到正常的数据
@@ -70,13 +71,13 @@ class ToRidKJ(Process):
         decoded_data = parse.unquote(rpl_result)
         return decoded_data
 
-    def request(self) -> str:
+    def _request(self) -> str:
         """
         请求拿到qq空间动态信息
         但是其中包含乱码数据
         :return:
         """
-        res = requests.get(url=self.url, headers=HEADER)
+        res = requests.get(url=self._url, headers=HEADER)
         status_code = res.status_code
         if status_code == 200:
             text_result = res.text.replace("_Callback(", "")[0:-3]
@@ -85,7 +86,7 @@ class ToRidKJ(Process):
             raise HTTPError
         return self.data_text
 
-    def parse_text(self):
+    def _parse_text(self):
         """
         对拿到的qq空间动态信息
         及其乱码信息进行解析整理
@@ -100,7 +101,6 @@ class ToRidKJ(Process):
         pass
 
     def run(self):
-        """多线程调用ToRidKJ"""
         self.run_to_rid()
 
 

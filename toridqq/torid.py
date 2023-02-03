@@ -4,13 +4,13 @@ from .toridkj import ToRidKJ
 
 class ToRid:
     def __init__(self, name_list, time, auto_register):
-        self.name_list = name_list
-        self.time = time
-        self.auto_register = auto_register
+        self._name_list = name_list
+        self._time = time
+        self._auto_register = auto_register
 
     def run_toridqq(self):
         return ToRidQQ(
-            self.name_list, self.time, self.auto_register)
+            self._name_list, self._time, self._auto_register)
 
     def run_toridkj(self):
         return ToRidKJ()

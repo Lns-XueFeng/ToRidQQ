@@ -4,7 +4,7 @@ version = "1.1.2"
 authors = [
   { name="Lns-XueFeng", email="1477792904@qq.com" },
 ]
-description = "实现了监控特定QQ聊天窗口并发送新消息提醒我"
+description = "可批量监控QQ聊天窗口并将新消息发送至我的邮箱或微信"
 readme = "README.md"
 license = { file="LICENSE" }
 requires-python = "3.9"

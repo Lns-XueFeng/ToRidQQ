@@ -16,7 +16,7 @@ class Email:
         self.name = name
         self.class_name = self.__class__.__name__
 
-    def _generate_email(self) -> MIMEMultipart:
+    def _generate(self) -> MIMEMultipart:
         """
         生成邮件
         :return: None
@@ -46,12 +46,12 @@ class Email:
 
         return main_msg
 
-    def send_qq_email(self) -> bool:
+    def send(self) -> bool:
         """
         发送邮件
         :return: True or False
         """
-        main_msg = self._generate_email()
+        main_msg = self._generate()
         try:
             server = SMTP_SSL(SMTP_QQ_COM, 465)
             server.login(MY_SENDER, MY_PASSWORD)

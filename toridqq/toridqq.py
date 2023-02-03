@@ -22,20 +22,20 @@ class ToRidQQ(Process):
         if not os.path.exists(RELATIVE_RESULT):
             os.mkdir(RELATIVE_RESULT)
 
-        self.try_link_count = 0
-        self.class_name = self.__class__.__name__
-        self.qq_window_name_list = name_list
-        self.qq_window_name = None   # 指向当前监控窗口名称
-        self.init_new_and_old()
-        self.time = time   # 控制监控轮询间隔
-        self.auto_register = auto_register   # 是否自动校园网登录
+        self._try_link_count = 0
+        self._class_name = self.__class__.__name__
+        self._qq_window_name_list = name_list
+        self._qq_window_name = None   # 指向当前监控窗口名称
+        self._init_new_and_old()
+        self._time = time   # 控制监控轮询间隔
+        self._auto_register = auto_register   # 是否自动校园网登录
 
-    def init_new_and_old(self) -> None:
+    def _init_new_and_old(self) -> None:
         """
         在类初始化时循环检查是否创建了对应每一个窗口的图片文件夹以及其图片
         :return:
         """
-        for qq_window_name in self.qq_window_name_list:
+        for qq_window_name in self._qq_window_name_list:
             user_images = SET_USER_IMAGES.format(qq_window_name)
             if not os.path.exists(user_images):
                 os.mkdir(user_images)
@@ -43,23 +43,22 @@ class ToRidQQ(Process):
 
     def _new_to_old(self):
         """new_image -> old_image"""
-        return new_to_old(self.qq_window_name)
+        return new_to_old(self._qq_window_name)
 
     def _compare_two_images(self) -> bool:
         self.compare = CompareImage(
-            USER_NEW_IMAGES.format(self.qq_window_name),
-            USER_OLD_IMAGES.format(self.qq_window_name),
-            self.qq_window_name,
+            USER_NEW_IMAGES.format(self._qq_window_name),
+            USER_OLD_IMAGES.format(self._qq_window_name),
+            self._qq_window_name,
         )
         return self.compare.compare_two_images()
 
     def _send_qq_email(self) -> bool:
-        self.email = Email(self.qq_window_name)
-        return self.email.send_qq_email()
+        return Email(self._qq_window_name).send()
 
-    def _link_school_internet(self, try_link_count) -> int or None:
-        self.internet = Internet()
-        return self.internet.link_school_internet(try_link_count)
+    @staticmethod
+    def _link_school_internet(try_link_count) -> int or None:
+        return Internet().link_school_internet(try_link_count)
 
     def _capture_qq_window(self) -> None:
         """
@@ -70,15 +69,15 @@ class ToRidQQ(Process):
             qq_box_win = uiautomation.WindowControl(
                 searchDepth=1,
                 ClassName=WINDOW_CLASS_NAME,
-                Name=self.qq_window_name,
+                Name=self._qq_window_name,
             )
             qq_box_sms = qq_box_win.ListControl(Name=WINDOW_NAME)
             if qq_box_win.Exists(5):
                 qq_box_win.SetActive()
                 qq_box_win.MoveToCenter()
-                qq_box_sms.CaptureToImage(USER_NEW_IMAGES.format(self.qq_window_name))
+                qq_box_sms.CaptureToImage(USER_NEW_IMAGES.format(self._qq_window_name))
             else:
-                logging.error(LOG_NOT_FIND_WINDOW.format(self.class_name))
+                logging.error(LOG_NOT_FIND_WINDOW.format(self._class_name))
                 raise WindowNotFindError
 
     def _capture_and_match(self) -> str:
@@ -115,24 +114,24 @@ class ToRidQQ(Process):
         while True:
             logging.info(LOG_FORMAT)
             current_time = datetime.now().strftime(TIME_FORMAT)
-            logging.info(LOG_RECORD_TIME.format(self.class_name, current_time))
-            school_link_status = self._link_school_internet(self.try_link_count)
-            if self.auto_register and school_link_status != 200:
-                self.try_link_count = school_link_status + 1
-                logging.warning(LOG_FAIL_LINK.format(self.class_name, self.try_link_count))
-                sleep(self.time)
+            logging.info(LOG_RECORD_TIME.format(self._class_name, current_time))
+            school_link_status = self._link_school_internet(self._try_link_count)
+            if self._auto_register and school_link_status != 200:
+                self._try_link_count = school_link_status + 1
+                logging.warning(LOG_FAIL_LINK.format(self._class_name, self._try_link_count))
+                sleep(self._time)
                 continue
-            for qq_window_name in self.qq_window_name_list:
-                self.qq_window_name = qq_window_name   # 更新self.qq_window_name
-                logging.info(LOG_CURRENT_WINDOW.format(self.class_name, self.qq_window_name))
+            for qq_window_name in self._qq_window_name_list:
+                self._qq_window_name = qq_window_name   # 更新self.qq_window_name
+                logging.info(LOG_CURRENT_WINDOW.format(self._class_name, self._qq_window_name))
                 self._capture_and_match()
-            # 生成html文件
+
             generate = GenerateHtml()
             generate.gen_html_file()
+
             if name == TEST:
                 break
-            sleep(self.time)
+            sleep(self._time)
 
     def run(self) -> None:
-        """多进程调用ToRidQQ"""
         self.run_to_rid()
