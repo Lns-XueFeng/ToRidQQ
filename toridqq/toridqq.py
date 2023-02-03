@@ -118,7 +118,8 @@ class ToRidQQ(Process):
             school_link_status = self._link_school_internet(self._try_link_count)
             if self._auto_register and school_link_status != 200:
                 self._try_link_count = school_link_status + 1
-                logging.warning(LOG_FAIL_LINK.format(self._class_name, self._try_link_count))
+                logging.warning(
+                    LOG_FAIL_LINK.format(self._class_name, self._try_link_count))
                 sleep(self._time)
                 continue
             for qq_window_name in self._qq_window_name_list:
