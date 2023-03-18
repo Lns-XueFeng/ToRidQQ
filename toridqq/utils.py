@@ -26,6 +26,10 @@ class NoRequestResponse(Exception):
     pass
 
 
+class CanNotPingCommand(Exception):
+    pass
+
+
 class NoKeyValueError(ValueError):
     pass
 
