@@ -6,8 +6,9 @@ from requests import HTTPError
 from .torid import ToRid
 from .internet import Internet
 
+
 parser = argparse.ArgumentParser()
-parser.add_argument("name_list", nargs="*", default="团结的火药桶", help="设置将要监控聊天窗口名称")
+parser.add_argument("name_list", nargs="*", help="设置将要监控聊天窗口名称")
 parser.add_argument("-t", "--time", nargs="?", default=300, help="设置程序监控窗口间隔时间")
 parser.add_argument("-o", "--open", action="store_true", help="是否自动打开并登录QQ(为避免读取用户账号密码请设置为自动登录)")
 # 默认在程序开始前进行一次计算机网络检查
@@ -36,4 +37,4 @@ if auto_register:
         raise HTTPError
 
 to_rid = ToRid(args.name_list, args.time, auto_register)
-to_rid.thread_run_torid()
+to_rid.run_toridqq()

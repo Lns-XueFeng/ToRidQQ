@@ -37,7 +37,6 @@ class ToRidKJ(Process):
         time_stamp = time.time()
         window_ld = random.random()
         g_tk是最后一个加密参数, 与cookie相关
-        :return:
         """
         key_list = re.findall("p_skey=(.*?);", self._cookie) or re.findall("skey=(.*?);", self._cookie) \
             or re.findall("rv2=(.*?);", self._cookie)
@@ -52,10 +51,7 @@ class ToRidKJ(Process):
         return hash_value & 2147483647
 
     def _to_dict(self) -> str:
-        """
-        将cookie字符串转为字典形式
-        :return:
-        """
+        """将cookie字符串转为字典形式"""
         new_cookie = "{" + self._cookie.replace("=", ":").replace(";", ",") + "}"
         return new_cookie
 
@@ -63,7 +59,6 @@ class ToRidKJ(Process):
         """
         请求返回的数据里面有很多乱码的数据
         待再拿出来的时候进行解码得到正常的数据
-        :return:
         """
         encode_result = self.data_text.encode("unicode_escape")
         decode_result = encode_result.decode("utf-8")
@@ -75,7 +70,6 @@ class ToRidKJ(Process):
         """
         请求拿到qq空间动态信息
         但是其中包含乱码数据
-        :return:
         """
         res = requests.get(url=self._url, headers=HEADER)
         status_code = res.status_code
@@ -90,7 +84,6 @@ class ToRidKJ(Process):
         """
         对拿到的qq空间动态信息
         及其乱码信息进行解析整理
-        :return:
         """
         if self.data_text:
             pass

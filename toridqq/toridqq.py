@@ -31,10 +31,7 @@ class ToRidQQ(Process):
         self._auto_register = auto_register   # 是否自动校园网登录
 
     def _init_new_and_old(self) -> None:
-        """
-        在类初始化时循环检查是否创建了对应每一个窗口的图片文件夹以及其图片
-        :return:
-        """
+        """在类初始化时循环检查是否创建了对应每一个窗口的图片文件夹以及其图片"""
         for qq_window_name in self._qq_window_name_list:
             user_images = SET_USER_IMAGES.format(qq_window_name)
             if not os.path.exists(user_images):
@@ -61,10 +58,7 @@ class ToRidQQ(Process):
         return Internet().link_school_internet(try_link_count)
 
     def _capture_qq_window(self) -> None:
-        """
-        调用uiautomation对指定qq窗口进行捕捉截图
-        :return:
-        """
+        """调用uiautomation对指定qq窗口进行捕捉截图"""
         with uiautomation.UIAutomationInitializerInThread():
             qq_box_win = uiautomation.WindowControl(
                 searchDepth=1,
@@ -84,7 +78,6 @@ class ToRidQQ(Process):
         """
         捕捉图片以及对其和前一张捕捉的图片进行相似性比较
         如果图片不同，则判断为新消息，发送邮件
-        :return:
         """
         self._capture_qq_window()
         match_result = self._compare_two_images()
@@ -100,7 +93,6 @@ class ToRidQQ(Process):
         """
         主要逻辑函数，对指定窗口进行轮询监控并进行一些意外操作
         :param name: QQ窗口名字
-        :return:
         """
         exit_warn = PRINT_END if name != TEST else TEST_FINISHED
         keyboard.add_hotkey("esc", exit_program, args=(exit_warn,))

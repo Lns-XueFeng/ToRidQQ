@@ -57,8 +57,5 @@ def new_to_old(qq_window_name: str) -> None:
 
 
 def torid_logging(func):
-    """
-    装饰函数为其增加日志记录功能
-    :return:
-    """
+    """装饰函数为其增加日志记录功能"""
     pass

@@ -9,7 +9,7 @@ class TestGenHtml(TestCase):
     def test_genhtml_is_true(self):
         """测试是否生成了html字符串"""
         gen_html = GenerateHtml()
-        html_string = gen_html.get_html()
+        html_string = gen_html._get_html()
         self.assertEqual(html_string, str)
 
     def test_verify_html_file(self):

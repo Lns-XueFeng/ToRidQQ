@@ -15,7 +15,7 @@ class ToRid:
     def run_toridkj(self):
         return ToRidKJ()
 
-    def thread_run_torid(self):
+    def process_run_torid(self):
         to_rid_qq = self.run_toridqq()
         to_rid_kj = self.run_toridkj()
         to_rid_qq.start()
