@@ -37,4 +37,4 @@ if auto_register:
         raise HTTPError
 
 to_rid = ToRid(args.name_list, args.time, auto_register)
-to_rid.process_run_torid()
+to_rid.run()
