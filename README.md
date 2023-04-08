@@ -1,5 +1,5 @@
 # ToRidQQ
-<h3>Help me to get message and to rid of qq（ To rid of QQ ）</h3>
+<h3>Help me to get message and to rid of qq ( ToRidQQ )</h3>
 
 <h3>目的：</h3>
 <p>实现程序自动监控指定QQ消息窗口并将新消息发送至邮箱, 或通过微信进行通知, 从而实现我的手机无QQ化</p>
