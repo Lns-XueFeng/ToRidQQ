@@ -16,7 +16,6 @@ class ToRidKJ:
     将QQ空间中新出的动态（仅自己想了解的好友, 推送至手机）
     """
     def __init__(self):
-        super(ToRidKJ, self).__init__(daemon=True)
         self._cookie = HEADER["cookie"]
         self._g_tk = self._decrypt_g_tk()
         self._rid = random.random()

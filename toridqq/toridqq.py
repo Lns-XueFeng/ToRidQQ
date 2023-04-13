@@ -17,7 +17,6 @@ from .genhtml import GenerateHtml
 
 class ToRidQQ:
     def __init__(self, name_list: list, time=300, auto_register=False):
-        super(ToRidQQ, self).__init__()
         if not os.path.exists(RELATIVE_RESULT):
             os.mkdir(RELATIVE_RESULT)
 
@@ -30,7 +29,7 @@ class ToRidQQ:
         self._auto_register = auto_register   # 是否自动校园网登录
 
     def _init_new_and_old(self) -> None:
-        """在类初始化时循环检查是否创建了对应每一个窗口的图片文件夹以及其图片"""
+        """在类初始化时循环检查是否创建了对应每一个窗口的图片文件夹以及其图片 """
         for qq_window_name in self._qq_window_name_list:
             user_images = SET_USER_IMAGES.format(qq_window_name)
             if not os.path.exists(user_images):
@@ -38,7 +37,7 @@ class ToRidQQ:
                 create_images(qq_window_name)
 
     def _new_to_old(self):
-        """new_image -> old_image"""
+        """ new_image -> old_image """
         return new_to_old(self._qq_window_name)
 
     def _compare_two_images(self) -> bool:
@@ -57,7 +56,7 @@ class ToRidQQ:
         return Internet().link_school_internet(try_link_count)
 
     def _capture_qq_window(self) -> None:
-        """调用uiautomation对指定qq窗口进行捕捉截图"""
+        """ 调用uiautomation对指定qq窗口进行捕捉截图 """
         with uiautomation.UIAutomationInitializerInThread():
             qq_box_win = uiautomation.WindowControl(
                 searchDepth=1,
